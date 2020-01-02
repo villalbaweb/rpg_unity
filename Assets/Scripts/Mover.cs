@@ -8,6 +8,7 @@ public class Mover : MonoBehaviour
 
     // cache
     NavMeshAgent _agent;
+    Ray lastRay;
 
 
     // Start is called before the first frame update
@@ -19,6 +20,11 @@ public class Mover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(0)) 
+        {
+            lastRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        }
+        Debug.DrawRay(lastRay.origin, lastRay.direction * 100, Color.green);
         _agent.destination = target.position;
     }
 }
