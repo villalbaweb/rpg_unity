@@ -19,7 +19,6 @@ public class Mover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 targetPos = new Vector3(target.position.x, target.position.y, target.position.z);
-        _agent.destination = targetPos;
+        _agent.destination = target.position;
     }
 }
