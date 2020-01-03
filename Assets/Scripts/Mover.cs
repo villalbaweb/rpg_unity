@@ -5,11 +5,13 @@ public class Mover : MonoBehaviour
 {
     // cache
     NavMeshAgent _agent;
+    Animator _animator;
 
     // Start is called before the first frame update
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -19,6 +21,7 @@ public class Mover : MonoBehaviour
         {
             MoveToCursor();
         }
+        UpdateAnimator();
     }
 
     private void MoveToCursor() 
@@ -29,5 +32,12 @@ public class Mover : MonoBehaviour
         bool hasHit = Physics.Raycast(ray, out hitData);
 
         _agent.destination = hasHit ? hitData.point : transform.position;
+    }
+
+    private void UpdateAnimator() 
+    {
+        Vector3 localVelocity = transform.InverseTransformDirection(_agent.velocity);
+        float speed = localVelocity.z;
+        _animator.SetFloat("ForwardSpeed", speed);
     }
 }
