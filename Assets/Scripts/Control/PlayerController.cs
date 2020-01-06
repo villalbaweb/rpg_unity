@@ -24,14 +24,15 @@ namespace RPG.Control
 
         private void InteractWithCombat()
         {
+            if(!Input.GetMouseButtonDown(0)) return;
+
             RaycastHit[] hitsData = Physics.RaycastAll(GetMouseRay());
             
             foreach(RaycastHit hit in hitsData)
             {
-
                 CombatTarget target = hit.collider.GetComponent<CombatTarget>();
 
-                if(target != null && Input.GetMouseButtonDown(0))
+                if(target != null)
                 {
                     _fighter.Attack(target);
                 }
