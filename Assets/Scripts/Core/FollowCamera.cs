@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 
-public class FollowCamera : MonoBehaviour
+namespace RPG.Core
 {
-    [SerializeField] Transform target;
-
-    void LateUpdate()
+    public class FollowCamera : MonoBehaviour
     {
-        transform.position = target.position;
+        [SerializeField] Transform target;
+
+        void LateUpdate()
+        {
+            transform.position = target.position;
+        }
     }
 }
