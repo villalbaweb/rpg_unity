@@ -17,21 +17,12 @@ public class Mover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0)) 
-        {
-            MoveToCursor();
-        }
         UpdateAnimator();
     }
 
-    private void MoveToCursor() 
+    public void MoveTo(Vector3 newPosition)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(ray.origin, ray.direction * 100, Color.green);
-        RaycastHit hitData;
-        bool hasHit = Physics.Raycast(ray, out hitData);
-
-        _agent.destination = hasHit ? hitData.point : transform.position;
+        _agent.destination = newPosition;
     }
 
     private void UpdateAnimator() 
