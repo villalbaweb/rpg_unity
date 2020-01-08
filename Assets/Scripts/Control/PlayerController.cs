@@ -18,25 +18,29 @@ namespace RPG.Control
 
         private void Update()
         {
-            InteractWithCombat();
+            if(InteractWithCombat()) return;
             InteractWithMovement();
         }
 
-        private void InteractWithCombat()
+        private bool InteractWithCombat()
         {
-            if(!Input.GetMouseButtonDown(0)) return;
-
             RaycastHit[] hitsData = Physics.RaycastAll(GetMouseRay());
             
             foreach(RaycastHit hit in hitsData)
             {
                 CombatTarget target = hit.collider.GetComponent<CombatTarget>();
 
-                if(target != null)
+                if (target == null) continue;
+
+                if(Input.GetMouseButtonDown(0))
                 {
                     _fighter.Attack(target);
                 }
+
+                return true;
             }
+            
+            return false;
         }
 
         private void InteractWithMovement()
