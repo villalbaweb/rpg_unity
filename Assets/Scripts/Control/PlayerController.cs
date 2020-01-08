@@ -19,7 +19,8 @@ namespace RPG.Control
         private void Update()
         {
             if(InteractWithCombat()) return;
-            InteractWithMovement();
+            if(InteractWithMovement()) return;
+            print("Notingh to do there...");
         }
 
         private bool InteractWithCombat()
@@ -43,20 +44,17 @@ namespace RPG.Control
             return false;
         }
 
-        private void InteractWithMovement()
-        {
-            if (Input.GetMouseButton(0))
-            {
-                MoveToCursor();
-            }
-        }
-
-        private void MoveToCursor()
+        private bool InteractWithMovement()
         {
             RaycastHit hitData;
             bool hasHit = Physics.Raycast(GetMouseRay(), out hitData);
             Vector3 newPosition = hasHit ? hitData.point : transform.position;
-            _mover.MoveTo(newPosition);
+            if (Input.GetMouseButton(0))
+            {
+                _mover.MoveTo(newPosition);
+            }
+
+            return hasHit;
         }
 
         private Ray GetMouseRay()
