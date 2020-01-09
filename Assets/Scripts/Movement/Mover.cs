@@ -1,18 +1,16 @@
 ﻿using RPG.Core;
-using RPG.Combat;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace RPG.Movement
 {
 
-    public class Mover : MonoBehaviour
+    public class Mover : MonoBehaviour, IAction
     {
         // cache
         NavMeshAgent _agent;
         Animator _animator;
         ActionScheduler _actionScheduler;
-        Fighter _fighter;
 
         // Start is called before the first frame update
         void Start()
@@ -20,7 +18,6 @@ namespace RPG.Movement
             _agent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
-            _fighter = GetComponent<Fighter>(); // circular dependency ????
         }
 
         // Update is called once per frame
@@ -29,7 +26,7 @@ namespace RPG.Movement
             UpdateAnimator();
         }
 
-        public void Stop()
+        public void Cancel()
         {
             _agent.isStopped = true;
         }
@@ -37,7 +34,6 @@ namespace RPG.Movement
         public void StartMoveAction(Vector3 destination)
         {
             _actionScheduler.StartAction(this);
-            _fighter.Cancel();
             MoveTo(destination);
         }
 

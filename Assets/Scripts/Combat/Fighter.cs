@@ -5,7 +5,7 @@ using UnityEngine;
 namespace RPG.Combat
 {
 
-    public class Fighter : MonoBehaviour 
+    public class Fighter : MonoBehaviour, IAction 
     {
         // config params
         [SerializeField] float weaponRange = 2f;
@@ -50,7 +50,7 @@ namespace RPG.Combat
             } 
             else
             {
-                _mover.Stop();
+                _mover.Cancel();
             }
         }
     }
