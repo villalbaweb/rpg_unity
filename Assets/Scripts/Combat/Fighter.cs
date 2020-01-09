@@ -13,6 +13,7 @@ namespace RPG.Combat
         // cache
         Mover _mover;
         ActionScheduler _actionScheduler;
+        Animator _animator;
 
         // state
         Transform target;
@@ -21,6 +22,7 @@ namespace RPG.Combat
         {
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
+            _animator = GetComponent<Animator>();
         }
 
         private void Update() 
@@ -51,7 +53,14 @@ namespace RPG.Combat
             else
             {
                 _mover.Cancel();
+                _animator.SetTrigger("Attack");
             }
+        }
+
+        // Animation Event
+        private void Hit()
+        {
+            print("Punching...");
         }
     }
 
