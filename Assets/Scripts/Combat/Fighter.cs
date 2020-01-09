@@ -53,8 +53,13 @@ namespace RPG.Combat
             else
             {
                 _mover.Cancel();
-                _animator.SetTrigger("Attack");
+                AttackBehavior();
             }
+        }
+
+        private void AttackBehavior()
+        {
+            _animator.SetTrigger("Attack");
         }
 
         // Animation Event
