@@ -51,8 +51,7 @@ namespace RPG.Control
             Vector3 newPosition = hasHit ? hitData.point : transform.position;
             if (Input.GetMouseButton(0))
             {
-                _mover.MoveTo(newPosition);
-                _fighter.Cancel();
+                _mover.StartMoveAction(newPosition);
             }
 
             return hasHit;

@@ -1,3 +1,4 @@
+using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace RPG.Combat
 
         // cache
         Mover _mover;
+        ActionScheduler _actionScheduler;
 
         // state
         Transform target;
@@ -18,6 +20,7 @@ namespace RPG.Combat
         private void Start() 
         {
             _mover = GetComponent<Mover>();
+            _actionScheduler = GetComponent<ActionScheduler>();
         }
 
         private void Update() 
@@ -27,6 +30,7 @@ namespace RPG.Combat
 
         public void Attack(CombatTarget combatTarget)
         {
+            _actionScheduler.StartAction(this);
             target = combatTarget.transform;
         }
 
