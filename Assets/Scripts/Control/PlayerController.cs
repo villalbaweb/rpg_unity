@@ -52,6 +52,7 @@ namespace RPG.Control
             if (Input.GetMouseButton(0))
             {
                 _mover.MoveTo(newPosition);
+                _fighter.Cancel();
             }
 
             return hasHit;
