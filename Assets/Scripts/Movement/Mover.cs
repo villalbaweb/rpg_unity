@@ -23,8 +23,14 @@ namespace RPG.Movement
             UpdateAnimator();
         }
 
+        public void Stop()
+        {
+            _agent.isStopped = true;
+        }
+
         public void MoveTo(Vector3 newPosition)
         {
+            _agent.isStopped = false;
             _agent.destination = newPosition;
         }
 
