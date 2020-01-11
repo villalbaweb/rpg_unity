@@ -9,6 +9,7 @@ namespace RPG.Combat
     {
         // config params
         [SerializeField] float weaponRange = 2f;
+        [SerializeField] float timeBetweenAttacks = 1f;
 
         // cache
         Mover _mover;
@@ -17,6 +18,7 @@ namespace RPG.Combat
 
         // state
         Transform target;
+        float timeSinceLastAttack = 0;
 
         private void Start() 
         {
@@ -27,6 +29,8 @@ namespace RPG.Combat
 
         private void Update() 
         {
+            timeSinceLastAttack += Time.deltaTime;
+
             MoveToAttackPoint();
         }
 
@@ -59,7 +63,10 @@ namespace RPG.Combat
 
         private void AttackBehavior()
         {
-            _animator.SetTrigger("Attack");
+            if (timeSinceLastAttack >= timeBetweenAttacks){
+                timeSinceLastAttack = 0;
+                _animator.SetTrigger("Attack");
+            }
         }
 
         // Animation Event
