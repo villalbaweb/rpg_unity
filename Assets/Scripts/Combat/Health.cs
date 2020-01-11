@@ -23,7 +23,13 @@ namespace RPG.Combat
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
 
-            if (!isDead && healthPoints == 0) {
+            DieHandler();
+        }
+
+        private void DieHandler()
+        {
+            if (!isDead && healthPoints == 0)
+            {
                 _animator.SetTrigger("Die");
                 isDead = true;
             }
