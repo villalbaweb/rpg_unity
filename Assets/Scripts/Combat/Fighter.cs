@@ -10,6 +10,7 @@ namespace RPG.Combat
         // config params
         [SerializeField] float weaponRange = 2f;
         [SerializeField] float timeBetweenAttacks = 1f;
+        [SerializeField] float weaponDamage = 5;
 
         // cache
         Mover _mover;
@@ -72,7 +73,7 @@ namespace RPG.Combat
         // Animation Event
         private void Hit()
         {
-            print("Punching...");
+            target.gameObject.GetComponent<Health>().TakeDamage(weaponDamage);
         }
     }
 
