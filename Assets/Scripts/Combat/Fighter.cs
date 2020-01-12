@@ -86,6 +86,8 @@ namespace RPG.Combat
         // Animation Event
         private void Hit()
         {
+            if (target == null) return;
+
             target.TakeDamage(weaponDamage);
         }
     }
