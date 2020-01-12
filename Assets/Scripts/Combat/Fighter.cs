@@ -52,9 +52,9 @@ namespace RPG.Combat
         public void Cancel()
         {
             target = null;
-            _animator.SetTrigger("Stop Attack");
+            TriggerStopAttack();
         }
-        
+
         private void MoveToAttackPoint()
         {
             if (target == null) return;
@@ -77,10 +77,23 @@ namespace RPG.Combat
 
             transform.LookAt(target.transform);
 
-            if (timeSinceLastAttack >= timeBetweenAttacks){
+            if (timeSinceLastAttack >= timeBetweenAttacks)
+            {
                 timeSinceLastAttack = 0;
-                _animator.SetTrigger("Attack");
+                TriggerAttack();
             }
+        }
+
+        private void TriggerAttack()
+        {
+            _animator.ResetTrigger("Stop Attack");
+            _animator.SetTrigger("Attack");
+        }
+
+        private void TriggerStopAttack()
+        {
+            _animator.ResetTrigger("Attack");
+            _animator.SetTrigger("Stop Attack");
         }
 
         // Animation Event
