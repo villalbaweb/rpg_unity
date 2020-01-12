@@ -44,6 +44,7 @@ namespace RPG.Combat
         public void Cancel()
         {
             target = null;
+            _animator.SetTrigger("Stop Attack");
         }
         
         private void MoveToAttackPoint()
