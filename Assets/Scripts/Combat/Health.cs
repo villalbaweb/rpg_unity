@@ -10,13 +10,13 @@ namespace RPG.Combat
         // cache
         Animator _animator;
 
-        // state
-        bool isDead;
+        // properties
+        public bool IsDead { get; set;}
 
         private void Start() {
             _animator = GetComponent<Animator>();
 
-            isDead = false;
+            IsDead = false;
         }
 
         public void TakeDamage(float damage)
@@ -28,10 +28,10 @@ namespace RPG.Combat
 
         private void DieHandler()
         {
-            if (!isDead && healthPoints == 0)
+            if (!IsDead && healthPoints == 0)
             {
                 _animator.SetTrigger("Die");
-                isDead = true;
+                IsDead = true;
             }
         }
     }

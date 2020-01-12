@@ -65,6 +65,8 @@ namespace RPG.Combat
 
         private void AttackBehavior()
         {
+            if (target.gameObject.GetComponent<Health>().IsDead) return;
+
             if (timeSinceLastAttack >= timeBetweenAttacks){
                 timeSinceLastAttack = 0;
                 _animator.SetTrigger("Attack");
