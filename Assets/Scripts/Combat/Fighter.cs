@@ -65,7 +65,7 @@ namespace RPG.Combat
 
         private void AttackBehavior()
         {
-            if (target.gameObject.GetComponent<Health>().IsDead) return;
+            if (target.IsDead) return;
 
             if (timeSinceLastAttack >= timeBetweenAttacks){
                 timeSinceLastAttack = 0;
@@ -76,7 +76,7 @@ namespace RPG.Combat
         // Animation Event
         private void Hit()
         {
-            target.gameObject.GetComponent<Health>().TakeDamage(weaponDamage);
+            target.TakeDamage(weaponDamage);
         }
     }
 
