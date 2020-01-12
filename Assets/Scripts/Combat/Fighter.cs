@@ -18,7 +18,7 @@ namespace RPG.Combat
         Animator _animator;
 
         // state
-        Transform target;
+        Health target;
         float timeSinceLastAttack = 0;
 
         private void Start() 
@@ -38,7 +38,7 @@ namespace RPG.Combat
         public void Attack(CombatTarget combatTarget)
         {
             _actionScheduler.StartAction(this);
-            target = combatTarget.transform;
+            target = combatTarget.GetComponent<Health>();
         }
 
         public void Cancel()
@@ -51,10 +51,10 @@ namespace RPG.Combat
         {
             if (target == null) return;
 
-            bool isInRange = Vector3.Distance(target.position, transform.position) <= weaponRange;
+            bool isInRange = Vector3.Distance(target.transform.position, transform.position) <= weaponRange;
             if (!isInRange)
             {
-                _mover.MoveTo(target.position);
+                _mover.MoveTo(target.transform.position);
             } 
             else
             {
