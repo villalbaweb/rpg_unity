@@ -35,6 +35,14 @@ namespace RPG.Combat
             MoveToAttackPoint();
         }
 
+        public bool CanAttack(CombatTarget combatTarget)
+        {
+            if (combatTarget == null) return false;
+
+            Health posibleTarget = combatTarget.GetComponent<Health>();
+            return posibleTarget != null && !posibleTarget.IsDead;
+        }
+
         public void Attack(CombatTarget combatTarget)
         {
             _actionScheduler.StartAction(this);
@@ -68,7 +76,7 @@ namespace RPG.Combat
             if (target.IsDead) return;
 
             transform.LookAt(target.transform);
-            
+
             if (timeSinceLastAttack >= timeBetweenAttacks){
                 timeSinceLastAttack = 0;
                 _animator.SetTrigger("Attack");

@@ -31,7 +31,7 @@ namespace RPG.Control
             {
                 CombatTarget target = hit.collider.GetComponent<CombatTarget>();
 
-                if (target == null) continue;
+                if(!_fighter.CanAttack(target)) continue;
 
                 if(Input.GetMouseButtonDown(0))
                 {
