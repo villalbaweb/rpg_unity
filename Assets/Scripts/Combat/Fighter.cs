@@ -67,6 +67,8 @@ namespace RPG.Combat
         {
             if (target.IsDead) return;
 
+            transform.LookAt(target.transform);
+            
             if (timeSinceLastAttack >= timeBetweenAttacks){
                 timeSinceLastAttack = 0;
                 _animator.SetTrigger("Attack");
