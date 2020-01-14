@@ -31,11 +31,11 @@ namespace RPG.Control
             {
                 CombatTarget target = hit.collider.GetComponent<CombatTarget>();
 
-                if(!_fighter.CanAttack(target)) continue;
+                if(target == null || !_fighter.CanAttack(target.gameObject)) continue;
 
                 if(Input.GetMouseButtonDown(0))
                 {
-                    _fighter.Attack(target);
+                    _fighter.Attack(target.gameObject);
                 }
 
                 return true;

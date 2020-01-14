@@ -35,7 +35,7 @@ namespace RPG.Combat
             MoveToAttackPoint();
         }
 
-        public bool CanAttack(CombatTarget combatTarget)
+        public bool CanAttack(GameObject combatTarget)
         {
             if (combatTarget == null) return false;
 
@@ -43,7 +43,7 @@ namespace RPG.Combat
             return posibleTarget != null && !posibleTarget.IsDead;
         }
 
-        public void Attack(CombatTarget combatTarget)
+        public void Attack(GameObject combatTarget)
         {
             _actionScheduler.StartAction(this);
             target = combatTarget.GetComponent<Health>();
