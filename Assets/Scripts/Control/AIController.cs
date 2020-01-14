@@ -1,4 +1,5 @@
 ﻿using RPG.Combat;
+using RPG.Core;
 using UnityEngine;
 
 namespace RPG.Control
@@ -10,15 +11,19 @@ namespace RPG.Control
 
         // cache
         Fighter _fighter;
+        Health _health;
         GameObject _player;
 
         private void Start() {
             _fighter = GetComponent<Fighter>();
+            _health = GetComponent<Health>();
             _player = GameObject.FindWithTag("Player");
         }
 
         private void Update()
         {
+            if (_health.IsDead) return;
+            
             Chase();
         }
 

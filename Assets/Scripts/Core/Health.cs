@@ -9,12 +9,14 @@ namespace RPG.Core
 
         // cache
         Animator _animator;
+        ActionScheduler _actionScheduler;
 
         // properties
         public bool IsDead { get; set;}
 
         private void Start() {
             _animator = GetComponent<Animator>();
+            _actionScheduler = GetComponent<ActionScheduler>();
 
             IsDead = false;
         }
@@ -32,6 +34,7 @@ namespace RPG.Core
             {
                 _animator.SetTrigger("Die");
                 IsDead = true;
+                _actionScheduler.CancelCurrentAction();
             }
         }
     }

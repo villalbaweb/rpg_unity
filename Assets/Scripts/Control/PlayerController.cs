@@ -1,5 +1,6 @@
 using RPG.Combat;
 using RPG.Movement;
+using RPG.Core;
 using UnityEngine;
 
 namespace RPG.Control
@@ -9,15 +10,19 @@ namespace RPG.Control
         // cache
         Mover _mover;
         Fighter _fighter;
+        Health _health;
         
         private void Start() 
         {
             _mover = GetComponent<Mover>();
             _fighter = GetComponent<Fighter>();
+            _health = GetComponent<Health>();
         }
 
         private void Update()
         {
+            if (_health.IsDead) return;
+
             if(InteractWithCombat()) return;
             if(InteractWithMovement()) return;
             print("Notingh to do there...");
