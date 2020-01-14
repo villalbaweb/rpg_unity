@@ -19,7 +19,7 @@ namespace RPG.Combat
 
         // state
         Health target;
-        float timeSinceLastAttack = 0;
+        float timeSinceLastAttack = Mathf.Infinity;
 
         private void Start() 
         {
