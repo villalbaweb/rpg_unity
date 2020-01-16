@@ -9,21 +9,25 @@ namespace RPG.Control
     {
         // config params
         [SerializeField] float chaseDistance = 5f;
+        [SerializeField] float suspitionTime = 5f;
 
         // cache
         Fighter _fighter;
         Health _health;
         GameObject _player;
         Mover _mover;
+        ActionScheduler _actionScheduler;
 
         // state
         Vector3 guardLocation;
+        float timeSinceLastSawPLayer = Mathf.Infinity;
 
         private void Start() {
             _fighter = GetComponent<Fighter>();
             _health = GetComponent<Health>();
             _player = GameObject.FindWithTag("Player");
             _mover = GetComponent<Mover>();
+            _actionScheduler = GetComponent<ActionScheduler>();
 
             guardLocation = transform.position;
         }
@@ -31,6 +35,8 @@ namespace RPG.Control
         private void Update()
         {
             if (_health.IsDead) return;
+
+            timeSinceLastSawPLayer += Time.deltaTime;
             
             Chase();
         }
@@ -39,12 +45,32 @@ namespace RPG.Control
         {
             if (IsInAttackRange() && _fighter.CanAttack(_player))
             {
-                _fighter.Attack(_player);
+                timeSinceLastSawPLayer = 0;
+                AttackBehavior();
             }
-            else 
+            else if (timeSinceLastSawPLayer <= suspitionTime)
             {
-                _mover.StartMoveAction(guardLocation);
+                SuspiciousBehavior();
             }
+            else
+            {
+                GuardBehavior();
+            }
+        }
+
+        private void GuardBehavior()
+        {
+            _mover.StartMoveAction(guardLocation);
+        }
+
+        private void SuspiciousBehavior()
+        {
+            _actionScheduler.CancelCurrentAction();
+        }
+
+        private void AttackBehavior()
+        {
+            _fighter.Attack(_player);
         }
 
         private bool IsInAttackRange() {
