@@ -11,11 +11,18 @@ namespace RPG.Control
         private void OnDrawGizmosSelected() {
             for (int i = 0; i < transform.childCount; i++)
             {
-                Vector3 gizmoPosition = transform.GetChild(i).position;
+                Vector3 gizmoPosition = GetWaypoint(i);
+                Vector3 nextGizmoPosition = GetWaypoint(i + 1);
 
-                Gizmos.color = Color.red;
+                Gizmos.color = Color.cyan;
                 Gizmos.DrawSphere(gizmoPosition, gizmoSize);
+                Gizmos.DrawLine(gizmoPosition, nextGizmoPosition);
             }
+        }
+
+        private Vector3 GetWaypoint(int i)
+        {
+            return transform.GetChild(i == transform.childCount ? 0 : i).position;
         }
     }
 }
