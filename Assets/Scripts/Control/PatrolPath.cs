@@ -12,7 +12,7 @@ namespace RPG.Control
             for (int i = 0; i < transform.childCount; i++)
             {
                 Vector3 gizmoPosition = GetWaypoint(i);
-                Vector3 nextGizmoPosition = GetWaypoint(i + 1);
+                Vector3 nextGizmoPosition = GetWaypoint(NextPosition(i));
 
                 Gizmos.color = Color.cyan;
                 Gizmos.DrawSphere(gizmoPosition, gizmoSize);
@@ -20,9 +20,16 @@ namespace RPG.Control
             }
         }
 
-        private Vector3 GetWaypoint(int i)
+        public int NextPosition(int i)
         {
-            return transform.GetChild(i == transform.childCount ? 0 : i).position;
+            return i == transform.childCount - 1 
+                ? 0 
+                : i + 1;
+        }
+
+        public Vector3 GetWaypoint(int i)
+        {
+            return transform.GetChild(i).position;
         }
     }
 }
