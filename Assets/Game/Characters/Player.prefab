@@ -32,37 +32,37 @@ PrefabInstance:
     - target: {fileID: 3804615095397490491, guid: c9c267c4726e49645a147046e3dcf70f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 57.340004
       objectReference: {fileID: 0}
     - target: {fileID: 3804615095397490491, guid: c9c267c4726e49645a147046e3dcf70f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -17.622368
       objectReference: {fileID: 0}
     - target: {fileID: 3804615095397490491, guid: c9c267c4726e49645a147046e3dcf70f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 22.36
       objectReference: {fileID: 0}
     - target: {fileID: 3804615095397490491, guid: c9c267c4726e49645a147046e3dcf70f,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3804615095397490491, guid: c9c267c4726e49645a147046e3dcf70f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.68404233
       objectReference: {fileID: 0}
     - target: {fileID: 3804615095397490491, guid: c9c267c4726e49645a147046e3dcf70f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3804615095397490491, guid: c9c267c4726e49645a147046e3dcf70f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.72944236
       objectReference: {fileID: 0}
     - target: {fileID: 3804615095397490491, guid: c9c267c4726e49645a147046e3dcf70f,
         type: 3}
@@ -77,12 +77,22 @@ PrefabInstance:
     - target: {fileID: 3804615095397490491, guid: c9c267c4726e49645a147046e3dcf70f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -86.32101
       objectReference: {fileID: 0}
     - target: {fileID: 3804615095397490491, guid: c9c267c4726e49645a147046e3dcf70f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2201461789502557709, guid: c9c267c4726e49645a147046e3dcf70f,
+        type: 3}
+      propertyPath: weaponDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 519174844477066932, guid: c9c267c4726e49645a147046e3dcf70f,
+        type: 3}
+      propertyPath: healthPoints
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9c267c4726e49645a147046e3dcf70f, type: 3}
