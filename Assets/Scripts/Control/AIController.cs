@@ -14,6 +14,9 @@ namespace RPG.Control
         [SerializeField] float waypointWaitTime = 2f;
         [SerializeField] PatrolPath patrolPath = null;
         [SerializeField] float waypointTolerance = 1f;
+        [Range(0,1)]
+        [SerializeField] float patrolSpeedFraction = 0.5f;
+        [SerializeField] float maxSpeed = 5f;
 
         // cache
         Fighter _fighter;
@@ -77,6 +80,7 @@ namespace RPG.Control
             }
 
             if(timeSinceReachWaypoint > waypointWaitTime) {
+                _mover.SetMovementSpeed(maxSpeed * patrolSpeedFraction);
                 _mover.StartMoveAction(nextPosition);
             }
         }
@@ -105,6 +109,7 @@ namespace RPG.Control
         private void AttackBehavior()
         {
             timeSinceLastSawPLayer = 0;
+            _mover.SetMovementSpeed(maxSpeed);
             _fighter.Attack(_player);
         }
 

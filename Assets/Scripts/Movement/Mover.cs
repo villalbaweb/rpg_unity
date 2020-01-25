@@ -47,6 +47,11 @@ namespace RPG.Movement
             _agent.destination = newPosition;
         }
 
+        public void SetMovementSpeed(float speed)
+        {
+            _agent.speed = speed;
+        }
+
         private void UpdateAnimator() 
         {
             Vector3 localVelocity = transform.InverseTransformDirection(_agent.velocity);
