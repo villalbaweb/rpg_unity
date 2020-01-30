@@ -1,23 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 
 namespace RPG.Cinematics
 {
     public class CinematicTrigger : MonoBehaviour
     {
-        // state
-        bool IsCinematicTriggered = false;
+        private void OnTriggerEnter(Collider other) 
+        {
+            if(other.tag != "Player") return;
 
-        private void OnTriggerEnter(Collider other) {
-
-            if(IsCinematicTriggered) return;
-
-            Debug.Log("colliding...");
-
+            GetComponent<BoxCollider>().enabled = false;
             GetComponent<PlayableDirector>().Play();
-            IsCinematicTriggered = true;
         }
     }
 }
