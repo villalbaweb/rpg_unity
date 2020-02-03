@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RPG.SceneManagement
 {
@@ -6,7 +7,8 @@ namespace RPG.SceneManagement
     {
         private void OnTriggerEnter(Collider other) 
         {
-            print("teletransport...");
+            if (other.tag != "Player") return;
+            SceneManager.LoadScene(1);
         }
     }
 }
