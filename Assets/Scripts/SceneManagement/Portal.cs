@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Linq;
+using RPG.Control;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +11,7 @@ namespace RPG.SceneManagement
     {
         // config params
         [SerializeField] int sceneToLoad = -1;
+        [SerializeField] Transform spawnPoint;
         
         private void OnTriggerEnter(Collider other) 
         {
@@ -20,8 +24,24 @@ namespace RPG.SceneManagement
         {
             DontDestroyOnLoad(gameObject);
             yield return SceneManager.LoadSceneAsync(sceneToLoad); 
-            print("Scene Laoded");
+
+            Portal otherPortal = GetOtherPortal();
+            UpdatePlayer(otherPortal);
+
             Destroy(gameObject);
+        }
+
+        private void UpdatePlayer(Portal otherPortal)
+        {
+            PlayerController player = FindObjectOfType<PlayerController>();
+
+            player.transform.position = otherPortal.spawnPoint.position;
+            player.transform.rotation = otherPortal.spawnPoint.rotation;
+        }
+
+        private Portal GetOtherPortal()
+        {
+            return FindObjectsOfType<Portal>().Where(x => x != this).FirstOrDefault();
         }
     }
 }
