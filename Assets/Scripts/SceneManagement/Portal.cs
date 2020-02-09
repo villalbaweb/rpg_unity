@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using RPG.Control;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 namespace RPG.SceneManagement
@@ -12,9 +13,7 @@ namespace RPG.SceneManagement
         enum DestinationIdentifier
         {
             A,
-            B,
-            C,
-            D
+            B
         }
 
         // config params
@@ -43,14 +42,17 @@ namespace RPG.SceneManagement
         private void UpdatePlayer(Portal otherPortal)
         {
             PlayerController player = FindObjectOfType<PlayerController>();
-
+            NavMeshAgent _agent = player.GetComponent<NavMeshAgent>();
+            _agent.enabled = false;
             player.transform.position = otherPortal.spawnPoint.position;
             player.transform.rotation = otherPortal.spawnPoint.rotation;
+            _agent.enabled = true;
         }
 
         private Portal GetOtherPortal()
         {
-            return FindObjectsOfType<Portal>().Where(x => x != this).FirstOrDefault();
+            Portal identifiedPortal = FindObjectsOfType<Portal>().Where(x => x != this && x.destination == destination).FirstOrDefault();
+            return identifiedPortal;
         }
     }
 }
