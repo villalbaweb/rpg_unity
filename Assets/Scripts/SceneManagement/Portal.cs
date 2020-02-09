@@ -9,9 +9,18 @@ namespace RPG.SceneManagement
 {
     public class Portal : MonoBehaviour
     {
+        enum DestinationIdentifier
+        {
+            A,
+            B,
+            C,
+            D
+        }
+
         // config params
         [SerializeField] int sceneToLoad = -1;
         [SerializeField] Transform spawnPoint;
+        [SerializeField] DestinationIdentifier destination;
         
         private void OnTriggerEnter(Collider other) 
         {
