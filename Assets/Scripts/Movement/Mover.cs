@@ -1,11 +1,12 @@
 ﻿using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
+using RPG.Saving;
 
 namespace RPG.Movement
 {
 
-    public class Mover : MonoBehaviour, IAction
+    public class Mover : MonoBehaviour, IAction, ISaveable
     {
         // cache
         NavMeshAgent _agent;
@@ -57,6 +58,19 @@ namespace RPG.Movement
             Vector3 localVelocity = transform.InverseTransformDirection(_agent.velocity);
             float speed = localVelocity.z;
             _animator.SetFloat("ForwardSpeed", speed);
+        }
+
+        public object CaptureState()
+        {
+            return new SerializableVector3(transform.position);
+        }
+
+        public void RestoreState(object state)
+        {
+            SerializableVector3 positon = state as SerializableVector3;
+            _agent.enabled = false;
+            transform.position = positon.ToVector();
+            _agent.enabled = true;
         }
     }
 
