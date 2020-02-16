@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using RPG.Saving;
+using System.Collections.Generic;
 
 namespace RPG.Movement
 {
@@ -62,15 +63,22 @@ namespace RPG.Movement
 
         public object CaptureState()
         {
-            return new SerializableVector3(transform.position);
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            data.Add("position", new SerializableVector3(transform.position));
+            data.Add("rotation", new SerializableVector3(transform.eulerAngles));
+            return data;
         }
 
         public void RestoreState(object state)
         {
-            SerializableVector3 positon = state as SerializableVector3;
+            Dictionary<string, object> data = state as Dictionary<string, object>;
+
+            SerializableVector3 positon = data["position"] as SerializableVector3;
+            SerializableVector3 rotation = data["rotation"] as SerializableVector3;
             _agent = GetComponent<NavMeshAgent>();
             _agent.enabled = false;
             transform.position = positon.ToVector();
+            transform.eulerAngles = rotation.ToVector();
             _agent.enabled = true;
         }
     }
