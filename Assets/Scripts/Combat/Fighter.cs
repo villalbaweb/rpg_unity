@@ -40,7 +40,7 @@ namespace RPG.Combat
             if (combatTarget == null) return false;
 
             Health posibleTarget = combatTarget.GetComponent<Health>();
-            return posibleTarget != null && !posibleTarget.IsDead;
+            return posibleTarget != null && !posibleTarget.IsDead();
         }
 
         public void Attack(GameObject combatTarget)
@@ -74,7 +74,7 @@ namespace RPG.Combat
 
         private void AttackBehavior()
         {
-            if (target.IsDead) return;
+            if (target.IsDead()) return;
 
             transform.LookAt(target.transform);
 

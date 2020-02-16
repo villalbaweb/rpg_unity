@@ -26,7 +26,7 @@ namespace RPG.Movement
         // Update is called once per frame
         void Update()
         {
-            _agent.enabled = !_health.IsDead;
+            _agent.enabled = !_health.IsDead();
 
             UpdateAnimator();
         }

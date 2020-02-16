@@ -21,7 +21,7 @@ namespace RPG.Control
 
         private void Update()
         {
-            if (_health.IsDead) return;
+            if (_health.IsDead()) return;
 
             if(InteractWithCombat()) return;
             if(InteractWithMovement()) return;

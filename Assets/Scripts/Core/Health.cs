@@ -12,14 +12,19 @@ namespace RPG.Core
         Animator _animator;
         ActionScheduler _actionScheduler;
 
-        // properties
-        public bool IsDead { get; set;}
+        // state
+        bool isDead;
 
         private void Start() {
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
 
-            IsDead = false;
+            isDead = false;
+        }
+
+        public bool IsDead()
+        {
+            return healthPoints == 0;
         }
 
         public void TakeDamage(float damage)
@@ -31,10 +36,10 @@ namespace RPG.Core
 
         private void DieHandler()
         {
-            if (!IsDead && healthPoints == 0)
+            if (!isDead && healthPoints == 0)
             {
                 _animator.SetTrigger("Die");
-                IsDead = true;
+                isDead = true;
                 _actionScheduler.CancelCurrentAction();
             }
         }
@@ -53,11 +58,11 @@ namespace RPG.Core
 
         private void UpdateAfterRestore()
         {
-            IsDead = healthPoints == 0;
+            isDead = healthPoints == 0;
             
             _animator = GetComponent<Animator>();
 
-            if(IsDead) {
+            if(isDead) {
                 _animator.SetTrigger("Die");
             } else {
                 _animator.SetTrigger("AliveAfterReload");

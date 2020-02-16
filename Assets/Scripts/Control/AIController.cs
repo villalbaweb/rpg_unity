@@ -43,7 +43,7 @@ namespace RPG.Control
 
         private void Update()
         {
-            if (_health.IsDead) return;
+            if (_health.IsDead()) return;
 
             timeSinceLastSawPLayer += Time.deltaTime;
             timeSinceReachWaypoint += Time.deltaTime;
