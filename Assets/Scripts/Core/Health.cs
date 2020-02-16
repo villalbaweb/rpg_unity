@@ -54,6 +54,9 @@ namespace RPG.Core
         private void UpdateAfterRestore()
         {
             IsDead = healthPoints == 0;
+            
+            _animator = GetComponent<Animator>();
+
             if(IsDead) {
                 _animator.SetTrigger("Die");
             } else {
