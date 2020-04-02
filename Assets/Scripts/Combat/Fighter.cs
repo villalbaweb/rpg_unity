@@ -28,6 +28,8 @@ namespace RPG.Combat
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
+
+            SpawnWeapon();
         }
 
         private void Update() 
@@ -56,6 +58,12 @@ namespace RPG.Combat
             target = null;
             _mover.Cancel();
             TriggerStopAttack();
+        }
+
+        private void SpawnWeapon()
+        {
+            if(!weaponPrefab || !handTransform) return;
+            Instantiate(weaponPrefab, handTransform);
         }
 
         private void MoveToAttackPoint()
