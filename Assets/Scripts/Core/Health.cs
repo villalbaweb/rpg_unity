@@ -66,6 +66,10 @@ namespace RPG.Core
                 _animator.SetTrigger("Die");
             } else {
                 _animator.SetTrigger("AliveAfterReload");
+
+                // this is required because after load the saved game if the enemy is alive it when it dies, the AliveAFterReload trigger remains set
+                // and pass the animation to locomotion blend tree
+                _animator.ResetTrigger("AliveAfterReload"); 
             } 
         }
     }
