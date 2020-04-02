@@ -707,6 +707,17 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 2.0194397
       objectReference: {fileID: 0}
+    - target: {fileID: 6082060796003724787, guid: 52ac64c6034ce044d814b678898da5b3,
+        type: 3}
+      propertyPath: weaponPrefab
+      value: 
+      objectReference: {fileID: 3351143502655050726, guid: da0052b0ea7689b40955af2078e55c82,
+        type: 3}
+    - target: {fileID: 6082060796003724787, guid: 52ac64c6034ce044d814b678898da5b3,
+        type: 3}
+      propertyPath: handTransform
+      value: 
+      objectReference: {fileID: 1482907610}
     - target: {fileID: 4805537067157553656, guid: 52ac64c6034ce044d814b678898da5b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -843,6 +854,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 748910206415835488, guid: 473e49e2c00c9254293a816e88019215,
     type: 3}
   m_PrefabInstance: {fileID: 1076160744}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1482907610 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7443137058003267179, guid: 52ac64c6034ce044d814b678898da5b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 844669264}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1492442424
 PrefabInstance:
