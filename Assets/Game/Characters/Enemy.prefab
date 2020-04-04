@@ -29,6 +29,8 @@ MonoBehaviour:
   waypointWaitTime: 2
   patrolPath: {fileID: 0}
   waypointTolerance: 1
+  patrolSpeedFraction: 0.5
+  maxSpeed: 5
 --- !u!1001 &4000911251004182192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -158,6 +160,12 @@ PrefabInstance:
       propertyPath: weaponDamage
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2201461789502557709, guid: c9c267c4726e49645a147046e3dcf70f,
+        type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 1a48f39dcb824bc409c945e4ce2a2106,
+        type: 2}
     - target: {fileID: 519174844477066932, guid: c9c267c4726e49645a147046e3dcf70f,
         type: 3}
       propertyPath: healthPoints
