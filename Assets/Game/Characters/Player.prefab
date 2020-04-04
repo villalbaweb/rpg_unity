@@ -100,6 +100,12 @@ PrefabInstance:
       propertyPath: handTransform
       value: 
       objectReference: {fileID: 2737035428005130443}
+    - target: {fileID: 2201461789502557709, guid: c9c267c4726e49645a147046e3dcf70f,
+        type: 3}
+      propertyPath: weapoOverride
+      value: 
+      objectReference: {fileID: 22100000, guid: 738a7d619d68b6e4a936e38bf8b768aa,
+        type: 2}
     - target: {fileID: 826011796840994493, guid: c9c267c4726e49645a147046e3dcf70f,
         type: 3}
       propertyPath: uniqueIdentifier

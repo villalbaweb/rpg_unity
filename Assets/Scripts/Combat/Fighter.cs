@@ -13,6 +13,7 @@ namespace RPG.Combat
         [SerializeField] float weaponDamage = 5;
         [SerializeField] GameObject weaponPrefab = null;
         [SerializeField] Transform handTransform = null;
+        [SerializeField] AnimatorOverrideController weapoOverride = null;
 
         // cache
         Mover _mover;
@@ -64,6 +65,9 @@ namespace RPG.Combat
         {
             if(!weaponPrefab || !handTransform) return;
             Instantiate(weaponPrefab, handTransform);
+
+            Animator _animator = GetComponent<Animator>();
+            _animator.runtimeAnimatorController = weapoOverride;
         }
 
         private void MoveToAttackPoint()
