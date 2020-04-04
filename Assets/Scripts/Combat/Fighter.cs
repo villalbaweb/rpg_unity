@@ -65,7 +65,7 @@ namespace RPG.Combat
             if(!weapon) return;
 
             Animator _animator = GetComponent<Animator>();
-            weapon.SpawnWeapon(handTransform, _animator);
+            weapon.Spawn(handTransform, _animator);
         }
 
         private void MoveToAttackPoint()
