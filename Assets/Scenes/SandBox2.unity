@@ -774,6 +774,12 @@ PrefabInstance:
       propertyPath: m_BoundingSphereOverride.w
       value: 3.3e-43
       objectReference: {fileID: 0}
+    - target: {fileID: 6082060796003724787, guid: 52ac64c6034ce044d814b678898da5b3,
+        type: 3}
+      propertyPath: defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 35d2912775d114544a34b5a662edb4ac,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52ac64c6034ce044d814b678898da5b3, type: 3}
 --- !u!1 &963167659
