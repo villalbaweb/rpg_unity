@@ -17,3 +17,4 @@ MonoBehaviour:
     type: 3}
   weaponRange: 1
   weaponDamage: 10
+  isRightHanded: 1
