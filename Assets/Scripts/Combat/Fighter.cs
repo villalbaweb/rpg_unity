@@ -10,7 +10,8 @@ namespace RPG.Combat
         // config params
         
         [SerializeField] float timeBetweenAttacks = 1f;
-        [SerializeField] Transform handTransform = null;
+        [SerializeField] Transform rightHandTransform = null;
+        [SerializeField] Transform leftHandTransform = null;
         [SerializeField] Weapon defaultWeapon = null;
 
         // cache
@@ -67,7 +68,7 @@ namespace RPG.Combat
             currentWeapon = weapon;
 
             Animator _animator = GetComponent<Animator>();
-            weapon.Spawn(handTransform, _animator);
+            weapon.Spawn(rightHandTransform, leftHandTransform, _animator);
         }
 
         private void MoveToAttackPoint()
