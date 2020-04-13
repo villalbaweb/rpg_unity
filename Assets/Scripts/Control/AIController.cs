@@ -24,6 +24,7 @@ namespace RPG.Control
         GameObject _player;
         Mover _mover;
         ActionScheduler _actionScheduler;
+        Rigidbody _rigidBody;
 
         // state
         Vector3 guardLocation;
@@ -37,13 +38,18 @@ namespace RPG.Control
             _player = GameObject.FindWithTag("Player");
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
+            _rigidBody = GetComponent<Rigidbody>();
 
             guardLocation = transform.position;
         }
 
         private void Update()
         {
-            if (_health.IsDead()) return;
+            if (_health.IsDead()) 
+            {
+                Destroy(_rigidBody); //destroy this component in order to avoid strange interactions
+                return;
+            }
 
             timeSinceLastSawPLayer += Time.deltaTime;
             timeSinceReachWaypoint += Time.deltaTime;

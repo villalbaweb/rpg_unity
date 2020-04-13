@@ -11,17 +11,23 @@ namespace RPG.Control
         Mover _mover;
         Fighter _fighter;
         Health _health;
+        Rigidbody _rigidBody;
         
         private void Start() 
         {
             _mover = GetComponent<Mover>();
             _fighter = GetComponent<Fighter>();
             _health = GetComponent<Health>();
+            _rigidBody = GetComponent<Rigidbody>();
         }
 
         private void Update()
         {
-            if (_health.IsDead()) return;
+            if (_health.IsDead())
+            {
+                Destroy(_rigidBody); //destroy this component in order to avoid strange interactions
+                return;
+            }
 
             if(InteractWithCombat()) return;
             if(InteractWithMovement()) return;
