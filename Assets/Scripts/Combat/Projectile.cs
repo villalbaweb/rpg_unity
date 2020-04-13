@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RPG.Core;
+using UnityEngine;
 
 namespace RPG.Combat
 {
@@ -6,7 +7,8 @@ namespace RPG.Combat
     {
         // config params
         [SerializeField] float speed = 10f;
-        [SerializeField] Transform target = null;
+        
+        Health _target = null;
 
         // Update is called once per frame
         void Update()
@@ -14,12 +16,23 @@ namespace RPG.Combat
             Move();
         }
 
+        public void SetTarget(Health target)
+        {
+            _target = target;
+        }
+
         private void Move()
         {
-            if (!target) return;
+            if (!_target) return;
 
-            transform.LookAt(target);
+            transform.LookAt(GetAimLocation());
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
+
+        private Vector3 GetAimLocation()
+        {
+            CapsuleCollider targetCapsuleCollider = _target.GetComponent<CapsuleCollider>();
+            return _target.transform.position + Vector3.up * targetCapsuleCollider.height / 2;
         }
     }
 }

@@ -112,12 +112,25 @@ namespace RPG.Combat
             _animator.SetTrigger("Stop Attack");
         }
 
-        // Animation Event
+        // Animation Events
         private void Hit()
         {
             if (target == null) return;
 
-            target.TakeDamage(currentWeapon.WeaponDamage);
+            if (currentWeapon.HasProjectile)
+            {
+                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target);
+            }
+            else
+            {
+                target.TakeDamage(currentWeapon.WeaponDamage);
+            }
+
+        }
+
+        private void Shoot()
+        {
+            Hit();
         }
     }
 
