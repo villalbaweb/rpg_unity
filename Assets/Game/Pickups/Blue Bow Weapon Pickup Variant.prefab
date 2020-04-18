@@ -77,6 +77,12 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.75
       objectReference: {fileID: 0}
+    - target: {fileID: 7998341073671123824, guid: bbd11de0361bd554b840f2903b6e819a,
+        type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 35d2912775d114544a34b5a662edb4ac,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbd11de0361bd554b840f2903b6e819a, type: 3}
 --- !u!4 &5803146907494374849 stripped
