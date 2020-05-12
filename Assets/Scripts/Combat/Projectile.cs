@@ -8,6 +8,7 @@ namespace RPG.Combat
         // config params
         [SerializeField] float speed = 10f;
         [SerializeField] bool isHoming = false;
+        [SerializeField] GameObject hitEffect = null;
         
         Health _target = null;
         float _damage = 0;
@@ -54,9 +55,17 @@ namespace RPG.Combat
         private void OnTriggerEnter(Collider other) 
         {
             if(other.GetComponent<Health>() != _target || _target.IsDead()) return;
-            
+
+            HitParticleFx();
+
             _target.TakeDamage(_damage);
             Destroy(gameObject);
+        }
+
+        private void HitParticleFx()
+        {
+            if(!hitEffect) return;
+            Instantiate(hitEffect, _target.transform.position, Quaternion.identity);
         }
     }
 }
