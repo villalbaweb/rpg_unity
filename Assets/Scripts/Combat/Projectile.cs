@@ -65,7 +65,8 @@ namespace RPG.Combat
         private void HitParticleFx()
         {
             if(!hitEffect) return;
-            Instantiate(hitEffect, _target.transform.position, Quaternion.identity);
+            
+            Instantiate(hitEffect, GetAimLocation(), Quaternion.identity);
         }
     }
 }
