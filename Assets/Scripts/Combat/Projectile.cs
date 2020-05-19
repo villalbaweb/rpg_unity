@@ -10,6 +10,8 @@ namespace RPG.Combat
         [SerializeField] bool isHoming = false;
         [SerializeField] GameObject hitEffect = null;
         [SerializeField] float maxLifetime = 5.0f;
+        [SerializeField] GameObject[] destroyOnHit = null;
+        [SerializeField] float timeAfterImpact = 0.2f;
         
         Health _target = null;
         float _damage = 0;
@@ -59,10 +61,21 @@ namespace RPG.Combat
         {
             if(other.GetComponent<Health>() != _target || _target.IsDead()) return;
 
+            DestroyProjectilePartsOnHit();
+
             HitParticleFx();
 
             _target.TakeDamage(_damage);
-            Destroy(gameObject);
+            
+            Destroy(gameObject, timeAfterImpact);
+        }
+
+        private void DestroyProjectilePartsOnHit()
+        {
+            foreach(GameObject projectilePart in destroyOnHit)
+            {
+                Destroy(projectilePart);
+            }
         }
 
         private void HitParticleFx()
