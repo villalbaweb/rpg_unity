@@ -9,6 +9,7 @@ namespace RPG.Combat
         [SerializeField] float speed = 10f;
         [SerializeField] bool isHoming = false;
         [SerializeField] GameObject hitEffect = null;
+        [SerializeField] float maxLifetime = 5.0f;
         
         Health _target = null;
         float _damage = 0;
@@ -27,6 +28,8 @@ namespace RPG.Combat
         {
             _target = target;
             _damage = damage;
+
+            Destroy(gameObject, maxLifetime);
         }
 
         private void Move()
