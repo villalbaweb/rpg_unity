@@ -44,6 +44,9 @@ namespace RPG.SceneManagement
 
             _savingWrapper.Load();
 
+            // after load the scene wait for it completely
+            yield return new WaitForEndOfFrame(); 
+
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
 

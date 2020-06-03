@@ -1,11 +1,12 @@
 using RPG.Core;
 using RPG.Movement;
+using RPG.Saving;
 using UnityEngine;
 
 namespace RPG.Combat
 {
 
-    public class Fighter : MonoBehaviour, IAction 
+    public class Fighter : MonoBehaviour, IAction, ISaveable 
     {
         // config params
         
@@ -13,7 +14,6 @@ namespace RPG.Combat
         [SerializeField] Transform rightHandTransform = null;
         [SerializeField] Transform leftHandTransform = null;
         [SerializeField] Weapon defaultWeapon = null;
-        [SerializeField] string defaultWeaponName = "Unarmed";
 
         // cache
         Mover _mover;
@@ -31,9 +31,10 @@ namespace RPG.Combat
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
 
-            // Resources is a special folder that will include all the assets and refs to the build
-            Weapon weapon = Resources.Load<Weapon>(defaultWeaponName);
-            EquipWeapon(weapon);
+            if(!currentWeapon)
+            {
+                EquipWeapon(defaultWeapon);
+            }
         }
 
         private void Update() 
@@ -134,6 +135,20 @@ namespace RPG.Combat
         private void Shoot()
         {
             Hit();
+        }
+
+        public object CaptureState()
+        {
+            return currentWeapon.name;
+        }
+
+        public void RestoreState(object state)
+        {
+            string restoredWeaponName = state as string;
+
+            // Resources is a special folder that will include all the assets and refs to the build
+            Weapon weapon = Resources.Load<Weapon>(restoredWeaponName);
+            EquipWeapon(weapon);
         }
     }
 
