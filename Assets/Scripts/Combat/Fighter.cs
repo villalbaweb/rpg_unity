@@ -1,5 +1,6 @@
 using RPG.Core;
 using RPG.Movement;
+using RPG.Resources;
 using RPG.Saving;
 using UnityEngine;
 
@@ -147,7 +148,7 @@ namespace RPG.Combat
             string restoredWeaponName = state as string;
 
             // Resources is a special folder that will include all the assets and refs to the build
-            Weapon weapon = Resources.Load<Weapon>(restoredWeaponName);
+            Weapon weapon = UnityEngine.Resources.Load<Weapon>(restoredWeaponName);
             EquipWeapon(weapon);
         }
     }

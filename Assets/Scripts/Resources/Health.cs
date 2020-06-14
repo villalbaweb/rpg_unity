@@ -1,7 +1,9 @@
+using RPG.Core;
 using RPG.Saving;
+using RPG.Stats;
 using UnityEngine;
 
-namespace RPG.Core
+namespace RPG.Resources
 {
     public class Health : MonoBehaviour, ISaveable
     {
@@ -20,6 +22,8 @@ namespace RPG.Core
             _actionScheduler = GetComponent<ActionScheduler>();
 
             isDead = false;
+
+            healthPoints = GetComponent<BaseStats>().GetHealth();
         }
 
         public bool IsDead()

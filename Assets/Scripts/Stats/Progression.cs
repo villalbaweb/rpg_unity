@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace RPG.Stats
 {
@@ -7,11 +8,16 @@ namespace RPG.Stats
     {
         [SerializeField] ProgressionCharacterClass[] characterClasses = null;
 
+        public float GetHealth(CharacterClass characterClass, int level)
+        {
+            return characterClasses.Where(x => x.character == characterClass).FirstOrDefault().health[level - 1];
+        }
+
         [System.Serializable]
         public class ProgressionCharacterClass
         {
-            [SerializeField] CharacterClass character;
-            [SerializeField] float[] health;
+            public CharacterClass character;
+            public float[] health;
         }
     }
 }
