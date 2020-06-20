@@ -31,21 +31,30 @@ namespace RPG.Resources
             return healthPoints == 0;
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(GameObject instigator, float damage)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
 
-            DieHandler();
+            DieHandler(instigator);
         }
 
-        private void DieHandler()
+        private void DieHandler(GameObject instigator)
         {
             if (!isDead && healthPoints == 0)
             {
                 _animator.SetTrigger("Die");
                 isDead = true;
                 _actionScheduler.CancelCurrentAction();
+                AwardExperience(instigator);
             }
+        }
+
+        private void AwardExperience(GameObject instigator)
+        {
+            Experience experience = instigator.GetComponent<Experience>();
+            if(!experience) return;
+
+            experience.GainExperience(GetComponent<BaseStats>().GetExperienceReward());
         }
 
         public float GetPercentage()

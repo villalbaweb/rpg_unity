@@ -14,6 +14,7 @@ namespace RPG.Combat
         [SerializeField] float timeAfterImpact = 0.2f;
         
         Health _target = null;
+        GameObject _instigator = null;
         float _damage = 0;
 
         private void Start() 
@@ -26,10 +27,11 @@ namespace RPG.Combat
             Move();
         }
 
-        public void SetTarget(Health target, float damage)
+        public void SetTarget(Health target, GameObject instigator, float damage)
         {
             _target = target;
             _damage = damage;
+            _instigator = instigator;
 
             Destroy(gameObject, maxLifetime);
         }
@@ -65,7 +67,7 @@ namespace RPG.Combat
 
             HitParticleFx();
 
-            _target.TakeDamage(_damage);
+            _target.TakeDamage(_instigator, _damage);
             
             Destroy(gameObject, timeAfterImpact);
         }
