@@ -8,13 +8,13 @@ namespace RPG.Stats
     {
         [SerializeField] ProgressionCharacterClass[] characterClasses = null;
 
-        public float GetHealth(CharacterClass characterClass, int level)
+        public float GetStat(Stat stat, CharacterClass characterClass, int level)
         {
             float health = characterClasses
                 .Where(x => x.character == characterClass)
                 .FirstOrDefault()
                 .stats
-                .Where(stat => stat.stat == Stat.Health)
+                .Where(x => x.stat == stat)
                 .FirstOrDefault()
                 .levels[level - 1];
 
