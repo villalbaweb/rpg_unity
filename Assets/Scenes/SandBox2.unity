@@ -975,6 +975,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 2.0194397
       objectReference: {fileID: 0}
+    - target: {fileID: 4287701929288672661, guid: 52ac64c6034ce044d814b678898da5b3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4805537067157553656, guid: 52ac64c6034ce044d814b678898da5b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1110,12 +1115,6 @@ PrefabInstance:
       propertyPath: uniqueIdentifier
       value: 4965b41b-d8fa-424f-b17f-4431c867212f
       objectReference: {fileID: 0}
-    - target: {fileID: 2316316190591434838, guid: 473e49e2c00c9254293a816e88019215,
-        type: 3}
-      propertyPath: defaultWeapon
-      value: 
-      objectReference: {fileID: 11400000, guid: 35d2912775d114544a34b5a662edb4ac,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 473e49e2c00c9254293a816e88019215, type: 3}
 --- !u!4 &1076160745 stripped
