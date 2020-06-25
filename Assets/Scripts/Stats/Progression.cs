@@ -10,13 +10,14 @@ namespace RPG.Stats
 
         public float GetStat(Stat stat, CharacterClass characterClass, int level)
         {
-            float health = characterClasses
+            ProgessionStat progressionStat = characterClasses
                 .Where(x => x.character == characterClass)
                 .FirstOrDefault()
                 .stats
-                .Where(x => x.stat == stat)
-                .FirstOrDefault()
-                .levels[level - 1];
+                .Where(x =>x.levels.Length >= level && x.stat == stat)
+                .FirstOrDefault();
+
+                float health = progressionStat != null ? progressionStat.levels[level - 1] : 0;
 
             return health;
         }
