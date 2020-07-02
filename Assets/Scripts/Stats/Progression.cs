@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace RPG.Stats
@@ -8,18 +9,43 @@ namespace RPG.Stats
     {
         [SerializeField] ProgressionCharacterClass[] characterClasses = null;
 
+        Dictionary<CharacterClass, Dictionary<Stat, float[]>> lookupTable = null;
+
         public float GetStat(Stat stat, CharacterClass characterClass, int level)
         {
-            ProgessionStat progressionStat = characterClasses
-                .Where(x => x.character == characterClass)
-                .FirstOrDefault()
-                .stats
-                .Where(x =>x.levels.Length >= level && x.stat == stat)
-                .FirstOrDefault();
+            BuildLookup();
 
-                float health = progressionStat != null ? progressionStat.levels[level - 1] : 0;
+            float statValue = 0;
 
-            return health;
+            if(lookupTable.ContainsKey(characterClass) && lookupTable[characterClass].ContainsKey(stat))
+            {
+                float[] statLevels = lookupTable[characterClass][stat];
+
+                if (statLevels.Length >= level)
+                {
+                    statValue = statLevels[level - 1];
+                }
+            }
+
+            return statValue;
+        }
+
+        private void BuildLookup()
+        {
+            if(lookupTable != null) return;
+
+            lookupTable = new Dictionary<CharacterClass, Dictionary<Stat, float[]>>();
+
+            foreach(ProgressionCharacterClass progressionClass in characterClasses)
+            {
+                Dictionary<Stat, float[]> statsLookupTable = new Dictionary<Stat, float[]>();
+                foreach(ProgessionStat progressionStat in progressionClass.stats)
+                {
+                    statsLookupTable.Add(progressionStat.stat, progressionStat.levels);
+                }
+
+                lookupTable.Add(progressionClass.character, statsLookupTable);
+            }
         }
 
         [System.Serializable]
