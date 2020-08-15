@@ -13,7 +13,7 @@ namespace RPG.Stats
         Experience _experience;
 
         // state
-        int currentLevel = 0;
+        public int CurrentLevel { get; set; }
 
         void Start()
         {
@@ -24,7 +24,7 @@ namespace RPG.Stats
                 _experience.OnExperienceGainedEvent += OnExperienceGained;
             }
 
-            currentLevel = GetExperienceLevel();
+            CurrentLevel = GetExperienceLevel();
         }
 
         void OnDestroy()
@@ -37,10 +37,10 @@ namespace RPG.Stats
 
         public float GetStat(Stat statToGet)
         {
-            return progression ? progression.GetStat(statToGet, characterClass, GetExperienceLevel()) : 0;
+            return progression ? progression.GetStat(statToGet, characterClass, CurrentLevel) : 0;
         }
 
-        public int GetExperienceLevel()
+        private int GetExperienceLevel()
         {
             if(!_experience) { return startingLevel; }
 
@@ -60,7 +60,7 @@ namespace RPG.Stats
 
         private void OnExperienceGained()
         {
-            currentLevel = GetExperienceLevel();
+            CurrentLevel = GetExperienceLevel();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace RPG.Stats
         // Update is called once per frame
         void Update()
         {
-            float experience = _playerBaseStats.GetExperienceLevel();
+            float experience = _playerBaseStats.CurrentLevel;
             _text.text = experience > 0
                 ? string.Format("{0}", experience)
                 : "0";
