@@ -21,7 +21,7 @@ namespace RPG.Stats
 
             if(_experience)
             {
-                _experience.OnExperienceGained += OnExperienceGained;
+                _experience.OnExperienceGainedEvent += OnExperienceGained;
             }
 
             currentLevel = GetExperienceLevel();
@@ -31,7 +31,7 @@ namespace RPG.Stats
         {
             if(_experience)
             {
-                _experience.OnExperienceGained -= OnExperienceGained;
+                _experience.OnExperienceGainedEvent -= OnExperienceGained;
             }
         }
 
