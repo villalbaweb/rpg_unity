@@ -9,6 +9,32 @@ namespace RPG.Stats
         [SerializeField] CharacterClass characterClass;
         [SerializeField] Progression progression = null;
 
+        // cache
+        Experience _experience;
+
+        // state
+        int currentLevel = 0;
+
+        void Start()
+        {
+            _experience = GetComponent<Experience>();
+
+            if(_experience)
+            {
+                _experience.OnExperienceGained += OnExperienceGained;
+            }
+
+            currentLevel = GetExperienceLevel();
+        }
+
+        void OnDestroy()
+        {
+            if(_experience)
+            {
+                _experience.OnExperienceGained -= OnExperienceGained;
+            }
+        }
+
         public float GetStat(Stat statToGet)
         {
             return progression ? progression.GetStat(statToGet, characterClass, GetExperienceLevel()) : 0;
@@ -16,8 +42,6 @@ namespace RPG.Stats
 
         public int GetExperienceLevel()
         {
-            Experience _experience = GetComponent<Experience>();
-
             if(!_experience) { return startingLevel; }
 
             float currentXP = _experience.GetExperience();
@@ -32,6 +56,11 @@ namespace RPG.Stats
             }
 
             return penultimateLevel + 1;
+        }
+
+        private void OnExperienceGained()
+        {
+            currentLevel = GetExperienceLevel();
         }
     }
 }
