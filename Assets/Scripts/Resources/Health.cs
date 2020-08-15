@@ -15,15 +15,13 @@ namespace RPG.Resources
         ActionScheduler _actionScheduler;
 
         // state
-        bool isDead;
+        bool isDead = false;
 
         private void Start() {
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
 
-            isDead = false;
-
-            healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
+            healthPoints = isDead ? 0 : GetComponent<BaseStats>().GetStat(Stat.Health);
         }
 
         public bool IsDead()
