@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace RPG.Stats
 {
@@ -9,6 +10,9 @@ namespace RPG.Stats
         [SerializeField] CharacterClass characterClass;
         [SerializeField] Progression progression = null;
         [SerializeField] GameObject levelUpParticleEffect = null;
+
+        // events
+        public event Action OnLevelUpEvent;
 
         // cache
         Experience _experience;
@@ -67,6 +71,7 @@ namespace RPG.Stats
             {
                 CurrentLevel = calculatedLevel;
                 LevelUpVFX();
+                if(OnLevelUpEvent != null) OnLevelUpEvent();
             }
         }
 

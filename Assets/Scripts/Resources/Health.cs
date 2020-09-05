@@ -9,10 +9,12 @@ namespace RPG.Resources
     {
         // config params
         [SerializeField] float healthPoints = 100f;
+        [SerializeField] float regenerationPercentage = 70;
 
         // cache
         Animator _animator;
         ActionScheduler _actionScheduler;
+        BaseStats _baseStats;
 
         // state
         bool isDead = false;
@@ -20,8 +22,11 @@ namespace RPG.Resources
         private void Start() {
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
+            _baseStats = GetComponent<BaseStats>();
 
-            healthPoints = isDead ? 0 : GetComponent<BaseStats>().GetStat(Stat.Health);
+            _baseStats.OnLevelUpEvent += RegenerateHealth;
+
+            healthPoints = isDead ? 0 : _baseStats.GetStat(Stat.Health);
         }
 
         public bool IsDead()
@@ -52,12 +57,18 @@ namespace RPG.Resources
             Experience experience = instigator.GetComponent<Experience>();
             if(!experience) return;
 
-            experience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
+            experience.GainExperience(_baseStats.GetStat(Stat.ExperienceReward));
         }
 
         public float GetPercentage()
         {
-            return (healthPoints * 100 ) / GetComponent<BaseStats>().GetStat(Stat.Health);
+            return (healthPoints * 100 ) / _baseStats.GetStat(Stat.Health);
+        }
+
+        private void RegenerateHealth()
+        {
+            float regenerateHealt = _baseStats.GetStat(Stat.Health) * regenerationPercentage / 100;
+            healthPoints = Mathf.Max(healthPoints , regenerateHealt);
         }
 
         public object CaptureState()
