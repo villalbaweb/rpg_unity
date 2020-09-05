@@ -60,7 +60,13 @@ namespace RPG.Stats
 
         private void OnExperienceGained()
         {
-            CurrentLevel = GetExperienceLevel();
+            int calculatedLevel = GetExperienceLevel();
+
+            if(calculatedLevel > CurrentLevel)
+            {
+                CurrentLevel = calculatedLevel;
+                print("LevelUp...");
+            }
         }
     }
 }
