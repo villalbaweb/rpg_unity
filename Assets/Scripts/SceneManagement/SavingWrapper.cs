@@ -16,7 +16,12 @@ namespace RPG.SceneManagement
         SavingSystem _savingSystem;
         Fader _fader;
 
-        IEnumerator Start() 
+        private void Awake()
+        {
+            StartCoroutine(LoadLastScene());
+        }
+
+        IEnumerator LoadLastScene() 
         {
             _savingSystem = GetComponent<SavingSystem>();
             _fader = FindObjectOfType<Fader>();

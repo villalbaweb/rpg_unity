@@ -8,7 +8,7 @@ namespace RPG.SceneManagement
         // cache
         CanvasGroup _canvasGroup;
 
-        private void Start() 
+        private void Awake() 
         {
             _canvasGroup = GetComponent<CanvasGroup>();
         }
