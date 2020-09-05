@@ -8,6 +8,7 @@ namespace RPG.Stats
         [SerializeField] int startingLevel = 1;
         [SerializeField] CharacterClass characterClass;
         [SerializeField] Progression progression = null;
+        [SerializeField] GameObject levelUpParticleEffect = null;
 
         // cache
         Experience _experience;
@@ -65,8 +66,14 @@ namespace RPG.Stats
             if(calculatedLevel > CurrentLevel)
             {
                 CurrentLevel = calculatedLevel;
-                print("LevelUp...");
+                LevelUpVFX();
             }
+        }
+
+        private void LevelUpVFX()
+        {
+            var levelUpParticles = Instantiate(levelUpParticleEffect, transform);
+            Destroy(levelUpParticles, 2);
         }
     }
 }
