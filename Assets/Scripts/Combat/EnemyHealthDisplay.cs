@@ -23,7 +23,7 @@ namespace RPG.Combat
         {
             _health = _playerFighter.GetTarget();
             _text.text = _health && _health.GetPercentage() > 0 
-                ? String.Format("{0:0.0} %", _health.GetPercentage()) 
+                ? String.Format("{0:0.0} / {1:0.0}", _health.HealthPoints, _health.MaxHealthPoints) 
                 : "N/A";
         }
     }

@@ -19,7 +19,7 @@ namespace RPG.Resources
         // Update is called once per frame
         void Update()
         {
-            _text.text = String.Format("{0:0.0} %", _health.GetPercentage());
+            _text.text = String.Format("{0:0.0} / {1:0.0}", _health.HealthPoints, _health.MaxHealthPoints);
         }
     }
 }

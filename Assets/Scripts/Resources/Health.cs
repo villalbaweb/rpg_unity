@@ -19,6 +19,10 @@ namespace RPG.Resources
         // state
         bool isDead = false;
 
+        // porperties
+        public float HealthPoints => healthPoints;
+        public float MaxHealthPoints => _baseStats.GetStat(Stat.Health);
+
         private void Start() {
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
