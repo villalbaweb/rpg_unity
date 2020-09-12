@@ -42,7 +42,23 @@ namespace RPG.Stats
 
         public float GetStat(Stat statToGet)
         {
-            return progression ? progression.GetStat(statToGet, characterClass, CurrentLevel) : 0;
+            return progression 
+                ? progression.GetStat(statToGet, characterClass, CurrentLevel) + GetAdditiveModifier(statToGet)
+                : 0;
+        }
+
+        private float GetAdditiveModifier(Stat stat)
+        {
+            float additiveModifier = 0;
+            foreach(IModifierProvider modifierProvider in GetComponents<IModifierProvider>())
+            {
+                foreach(float modifierValue in modifierProvider.GetAdditiveModifier(stat))
+                {
+                    additiveModifier += modifierValue;
+                }
+            }
+
+            return additiveModifier;
         }
 
         private int GetExperienceLevel()

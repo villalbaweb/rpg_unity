@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Resources;
@@ -8,7 +9,7 @@ using UnityEngine;
 namespace RPG.Combat
 {
 
-    public class Fighter : MonoBehaviour, IAction, ISaveable 
+    public class Fighter : MonoBehaviour, IAction, ISaveable, IModifierProvider
     {
         // config params
         
@@ -123,6 +124,14 @@ namespace RPG.Combat
         {
             _animator.ResetTrigger("Attack");
             _animator.SetTrigger("Stop Attack");
+        }
+
+        public IEnumerable<float> GetAdditiveModifier(Stat stat)
+        {
+            if(stat == Stat.Damage)
+            {
+                yield return currentWeapon.WeaponDamage;
+            }
         }
 
         // Animation Events
