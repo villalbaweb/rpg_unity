@@ -2,6 +2,7 @@ using RPG.Core;
 using RPG.Movement;
 using RPG.Resources;
 using RPG.Saving;
+using RPG.Stats;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -20,6 +21,7 @@ namespace RPG.Combat
         Mover _mover;
         ActionScheduler _actionScheduler;
         Animator _animator;
+        BaseStats _baseStats;
 
         // state
         Health target;
@@ -31,6 +33,7 @@ namespace RPG.Combat
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
+            _baseStats = GetComponent<BaseStats>();
 
             if(!currentWeapon)
             {
@@ -127,13 +130,15 @@ namespace RPG.Combat
         {
             if (target == null) return;
 
+            float damage = _baseStats.GetStat(Stat.Damage);
+
             if (currentWeapon.HasProjectile)
             {
-                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject);
+                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject, damage);
             }
             else
             {
-                target.TakeDamage(gameObject, currentWeapon.WeaponDamage);
+                target.TakeDamage(gameObject, damage);
             }
 
         }
