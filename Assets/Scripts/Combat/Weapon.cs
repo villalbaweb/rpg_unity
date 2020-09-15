@@ -10,6 +10,7 @@ namespace RPG.Combat
         [SerializeField] GameObject equippedPrefab = null;
         [SerializeField] float weaponRange = 2f;
         [SerializeField] float weaponDamage = 5;
+        [SerializeField] float percentageBonus = 0f;
         [SerializeField] bool isRightHanded = true;
         [SerializeField] Projectile projectile = null;
 
@@ -17,6 +18,7 @@ namespace RPG.Combat
 
         public float WeaponRange { get { return weaponRange; } }
         public float WeaponDamage { get { return weaponDamage; } }
+        public float PercentageBonus => percentageBonus;
         public bool HasProjectile { get { return projectile != null; } }
 
         public void Spawn(Transform rightHand, Transform leftHand, Animator animator)

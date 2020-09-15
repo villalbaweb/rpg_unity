@@ -10,6 +10,7 @@ namespace RPG.Stats
         [SerializeField] CharacterClass characterClass;
         [SerializeField] Progression progression = null;
         [SerializeField] GameObject levelUpParticleEffect = null;
+        [SerializeField] bool shouldUseModifiers = false;
 
         // events
         public event Action OnLevelUpEvent;
@@ -42,23 +43,46 @@ namespace RPG.Stats
 
         public float GetStat(Stat statToGet)
         {
-            return progression 
-                ? progression.GetStat(statToGet, characterClass, CurrentLevel) + GetAdditiveModifier(statToGet)
+            return progression
+                ? (GetBaseStat(statToGet) + GetAdditiveModifier(statToGet)) * (1 + GetPercentageModifier(statToGet)/100)
                 : 0;
+        }
+
+        private float GetBaseStat(Stat statToGet)
+        {
+            return progression.GetStat(statToGet, characterClass, CurrentLevel);
         }
 
         private float GetAdditiveModifier(Stat stat)
         {
+            if(!shouldUseModifiers) return 0;
+
             float additiveModifier = 0;
             foreach(IModifierProvider modifierProvider in GetComponents<IModifierProvider>())
             {
-                foreach(float modifierValue in modifierProvider.GetAdditiveModifier(stat))
+                foreach(float modifierValue in modifierProvider.GetAdditiveModifiers(stat))
                 {
                     additiveModifier += modifierValue;
                 }
             }
 
             return additiveModifier;
+        }
+
+        private float GetPercentageModifier(Stat stat)
+        {
+            if(!shouldUseModifiers) return 0;
+            
+            float percentageModifier = 0;
+            foreach(IModifierProvider modifierProvider in GetComponents<IModifierProvider>())
+            {
+                foreach(float modifierValue in modifierProvider.GetPercentageModifiers(stat))
+                {
+                    percentageModifier += modifierValue;
+                }
+            }
+
+            return percentageModifier;
         }
 
         private int GetExperienceLevel()
