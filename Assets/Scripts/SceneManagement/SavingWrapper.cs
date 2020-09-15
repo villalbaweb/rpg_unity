@@ -24,9 +24,9 @@ namespace RPG.SceneManagement
         IEnumerator LoadLastScene() 
         {
             _savingSystem = GetComponent<SavingSystem>();
+            yield return _savingSystem.LoadLastScene(DEFAULT_SAVE_FILE);
             _fader = FindObjectOfType<Fader>();
             _fader.FadeOutInmediate();
-            yield return _savingSystem.LoadLastScene(DEFAULT_SAVE_FILE);
             yield return _fader.FadeIn(timeToFadeIn);
         }
 
