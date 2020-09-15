@@ -21,16 +21,30 @@ namespace RPG.Stats
         // state
         public int CurrentLevel { get; set; }
 
-        void Start()
+        private void Awake()
         {
             _experience = GetComponent<Experience>();
+        }
 
+        void Start()
+        {
+            CurrentLevel = GetExperienceLevel();
+        }
+
+        private void OnEnable()
+        {
             if(_experience)
             {
                 _experience.OnExperienceGainedEvent += OnExperienceGained;
             }
+        }
 
-            CurrentLevel = GetExperienceLevel();
+        private void OnDisable()
+        {
+            if(_experience)
+            {
+                _experience.OnExperienceGainedEvent -= OnExperienceGained;
+            }
         }
 
         void OnDestroy()

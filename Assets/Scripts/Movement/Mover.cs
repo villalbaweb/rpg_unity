@@ -16,8 +16,7 @@ namespace RPG.Movement
         ActionScheduler _actionScheduler;
         Health _health;
 
-        // Start is called before the first frame update
-        void Start()
+        private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();

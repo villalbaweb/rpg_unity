@@ -32,14 +32,18 @@ namespace RPG.Control
         float timeSinceReachWaypoint = Mathf.Infinity;
         int patrolPathWaypointIndex = 0;
 
-        private void Start() {
+        private void Awake()
+        {
             _fighter = GetComponent<Fighter>();
             _health = GetComponent<Health>();
             _player = GameObject.FindWithTag("Player");
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _rigidBody = GetComponent<Rigidbody>();
+        }
 
+        private void Start() 
+        {
             guardLocation = transform.position;
         }
 

@@ -23,14 +23,32 @@ namespace RPG.Resources
         public float HealthPoints => healthPoints;
         public float MaxHealthPoints => _baseStats.GetStat(Stat.Health);
 
-        private void Start() {
+        private void Awake()
+        {
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _baseStats = GetComponent<BaseStats>();
+        }
 
-            _baseStats.OnLevelUpEvent += RegenerateHealth;
-
+        private void Start() 
+        {
             healthPoints = isDead ? 0 : _baseStats.GetStat(Stat.Health);
+        }
+
+        private void OnEnable()
+        {
+            if(_baseStats)
+            {
+                _baseStats.OnLevelUpEvent += RegenerateHealth;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if(_baseStats)
+            {
+                _baseStats.OnLevelUpEvent -= RegenerateHealth;
+            }
         }
 
         public bool IsDead()

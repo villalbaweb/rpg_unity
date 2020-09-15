@@ -13,7 +13,7 @@ namespace RPG.Control
         Health _health;
         Rigidbody _rigidBody;
         
-        private void Start() 
+        private void Awake()
         {
             _mover = GetComponent<Mover>();
             _fighter = GetComponent<Fighter>();
