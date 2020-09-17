@@ -1,4 +1,5 @@
-﻿using RPG.Combat;
+﻿using GameDevTV.Utils;
+using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
 using RPG.Resources;
@@ -27,7 +28,7 @@ namespace RPG.Control
         Rigidbody _rigidBody;
 
         // state
-        Vector3 guardLocation;
+        LazyValue<Vector3> guardLocation;
         float timeSinceLastSawPLayer = Mathf.Infinity;
         float timeSinceReachWaypoint = Mathf.Infinity;
         int patrolPathWaypointIndex = 0;
@@ -40,11 +41,13 @@ namespace RPG.Control
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _rigidBody = GetComponent<Rigidbody>();
+
+            guardLocation = new LazyValue<Vector3>(GuardLocationInitializer);
         }
 
-        private void Start() 
+        private Vector3 GuardLocationInitializer()
         {
-            guardLocation = transform.position;
+            return transform.position;
         }
 
         private void Update()
@@ -79,7 +82,7 @@ namespace RPG.Control
 
         private void PatrolBehavior()
         {
-            Vector3 nextPosition = guardLocation;
+            Vector3 nextPosition = guardLocation.value;
 
             if (patrolPath != null){
                 if (AtWaypoint()) {

@@ -1,3 +1,4 @@
+using GameDevTV.Utils;
 using RPG.Core;
 using RPG.Saving;
 using RPG.Stats;
@@ -8,7 +9,6 @@ namespace RPG.Resources
     public class Health : MonoBehaviour, ISaveable
     {
         // config params
-        [SerializeField] float healthPoints = 100f;
         [SerializeField] float regenerationPercentage = 70;
 
         // cache
@@ -18,9 +18,10 @@ namespace RPG.Resources
 
         // state
         bool isDead = false;
+        LazyValue<float> healthPoints;
 
         // porperties
-        public float HealthPoints => healthPoints;
+        public float HealthPoints => healthPoints.value;
         public float MaxHealthPoints => _baseStats.GetStat(Stat.Health);
 
         private void Awake()
@@ -28,11 +29,13 @@ namespace RPG.Resources
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _baseStats = GetComponent<BaseStats>();
+
+            healthPoints = new LazyValue<float>(HealthPointsInitializer);
         }
 
-        private void Start() 
+        private float HealthPointsInitializer()
         {
-            healthPoints = isDead ? 0 : _baseStats.GetStat(Stat.Health);
+            return isDead ? 0 : _baseStats.GetStat(Stat.Health);
         }
 
         private void OnEnable()
@@ -53,19 +56,19 @@ namespace RPG.Resources
 
         public bool IsDead()
         {
-            return healthPoints == 0;
+            return healthPoints.value == 0;
         }
 
         public void TakeDamage(GameObject instigator, float damage)
         {
-            healthPoints = Mathf.Max(healthPoints - damage, 0);
+            healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
 
             DieHandler(instigator);
         }
 
         private void DieHandler(GameObject instigator)
         {
-            if (!isDead && healthPoints == 0)
+            if (!isDead && healthPoints.value == 0)
             {
                 _animator.SetTrigger("Die");
                 isDead = true;
@@ -84,30 +87,30 @@ namespace RPG.Resources
 
         public float GetPercentage()
         {
-            return (healthPoints * 100 ) / _baseStats.GetStat(Stat.Health);
+            return (healthPoints.value * 100 ) / _baseStats.GetStat(Stat.Health);
         }
 
         private void RegenerateHealth()
         {
             float regenerateHealt = _baseStats.GetStat(Stat.Health) * regenerationPercentage / 100;
-            healthPoints = Mathf.Max(healthPoints , regenerateHealt);
+            healthPoints.value = Mathf.Max(healthPoints.value , regenerateHealt);
         }
 
         public object CaptureState()
         {
-            return healthPoints;
+            return healthPoints.value;
         }
 
         public void RestoreState(object state)
         {
-            healthPoints = (float)state;
+            healthPoints.value = (float)state;
             UpdateAfterRestore();
 
         }
 
         private void UpdateAfterRestore()
         {
-            isDead = healthPoints == 0;
+            isDead = healthPoints.value == 0;
             
             _animator = GetComponent<Animator>();
 

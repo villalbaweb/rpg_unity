@@ -1,4 +1,5 @@
 ﻿using System;
+using GameDevTV.Utils;
 using UnityEngine;
 
 namespace RPG.Stats
@@ -19,16 +20,13 @@ namespace RPG.Stats
         Experience _experience;
 
         // state
-        public int CurrentLevel { get; set; }
+        public LazyValue<int> CurrentLevel { get; set; }
 
         private void Awake()
         {
             _experience = GetComponent<Experience>();
-        }
 
-        void Start()
-        {
-            CurrentLevel = GetExperienceLevel();
+            CurrentLevel = new LazyValue<int>(GetExperienceLevel);
         }
 
         private void OnEnable()
@@ -64,7 +62,7 @@ namespace RPG.Stats
 
         private float GetBaseStat(Stat statToGet)
         {
-            return progression.GetStat(statToGet, characterClass, CurrentLevel);
+            return progression.GetStat(statToGet, characterClass, CurrentLevel.value);
         }
 
         private float GetAdditiveModifier(Stat stat)
@@ -121,9 +119,9 @@ namespace RPG.Stats
         {
             int calculatedLevel = GetExperienceLevel();
 
-            if(calculatedLevel > CurrentLevel)
+            if(calculatedLevel > CurrentLevel.value)
             {
-                CurrentLevel = calculatedLevel;
+                CurrentLevel.value = calculatedLevel;
                 LevelUpVFX();
                 if(OnLevelUpEvent != null) OnLevelUpEvent();
             }
