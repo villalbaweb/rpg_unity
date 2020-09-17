@@ -40,8 +40,14 @@ namespace RPG.Combat
             currentWeapon = new LazyValue<Weapon>(CurrentWeaponInitialize);
         }
 
+        private void Start()
+        {
+            currentWeapon.ForceInit();
+        }
+
         private Weapon CurrentWeaponInitialize()
         {
+            AttachWeapon(defaultWeapon);
             return defaultWeapon;
         }
 
@@ -79,6 +85,11 @@ namespace RPG.Combat
 
             currentWeapon.value = weapon;
 
+            AttachWeapon(weapon);
+        }
+
+        private void AttachWeapon(Weapon weapon)
+        {
             Animator _animator = GetComponent<Animator>();
             weapon.Spawn(rightHandTransform, leftHandTransform, _animator);
         }
