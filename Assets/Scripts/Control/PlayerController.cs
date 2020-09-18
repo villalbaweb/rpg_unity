@@ -7,6 +7,9 @@ namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour {
         
+        // configs
+        [SerializeField] CursorMapping[] cursorMappings = null;
+
         // cache
         Mover _mover;
         Fighter _fighter;
@@ -31,7 +34,8 @@ namespace RPG.Control
 
             if(InteractWithCombat()) return;
             if(InteractWithMovement()) return;
-            print("Notingh to do there...");
+
+            SetCursor(CursorType.None);
         }
 
         private bool InteractWithCombat()
@@ -49,6 +53,8 @@ namespace RPG.Control
                     _fighter.Attack(target.gameObject);
                 }
 
+                SetCursor(CursorType.Combat);
+
                 return true;
             }
             
@@ -65,7 +71,28 @@ namespace RPG.Control
                 _mover.StartMoveAction(newPosition);
             }
 
+            SetCursor(CursorType.Movement);
+
             return hasHit;
+        }
+
+        private void SetCursor(CursorType cursorType)
+        {
+            CursorMapping mapping = GetCursorMapping(cursorType);
+            Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
+        }
+
+        private CursorMapping GetCursorMapping(CursorType type)
+        {
+            foreach(CursorMapping mapping in cursorMappings)
+            {
+                if(mapping.type == type)
+                {
+                    return mapping;
+                }
+            }
+
+            return cursorMappings[0];
         }
 
         private Ray GetMouseRay()
