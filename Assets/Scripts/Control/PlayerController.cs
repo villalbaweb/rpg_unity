@@ -2,6 +2,8 @@ using RPG.Combat;
 using RPG.Movement;
 using UnityEngine;
 using RPG.Resources;
+using System;
+using UnityEngine.EventSystems;
 
 namespace RPG.Control
 {
@@ -26,8 +28,11 @@ namespace RPG.Control
 
         private void Update()
         {
+            if(InteractWithUI()) return;
+
             if (_health.IsDead())
             {
+                SetCursor(CursorType.None);
                 Destroy(_rigidBody); //destroy this component in order to avoid strange interactions
                 return;
             }
@@ -36,6 +41,18 @@ namespace RPG.Control
             if(InteractWithMovement()) return;
 
             SetCursor(CursorType.None);
+        }
+
+        private bool InteractWithUI()
+        {
+            bool result = false;
+            if(EventSystem.current.IsPointerOverGameObject())
+            {
+                SetCursor(CursorType.UI);
+                result = true;
+            }
+
+            return result;
         }
 
         private bool InteractWithCombat()

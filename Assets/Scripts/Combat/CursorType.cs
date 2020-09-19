@@ -6,7 +6,8 @@ namespace RPG.Control
     {
         None,
         Movement,
-        Combat
+        Combat,
+        UI
     }
 
     [System.Serializable]
