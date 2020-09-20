@@ -7,7 +7,8 @@ namespace RPG.Control
         None,
         Movement,
         Combat,
-        UI
+        UI,
+        Pickup
     }
 
     [System.Serializable]
