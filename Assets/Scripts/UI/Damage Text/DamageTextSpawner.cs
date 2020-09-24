@@ -8,7 +8,7 @@ namespace PRG.UI.DamageText
 
         public void Spawn(float damageAmount)
         {
-            print("Spawn execute");
+            print($"Spawn execute {damageAmount}");
             DamageText instance = Instantiate<DamageText>(damageTextPrefab, transform);
         }
     }
