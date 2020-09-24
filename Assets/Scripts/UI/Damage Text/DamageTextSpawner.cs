@@ -6,11 +6,6 @@ namespace PRG.UI.DamageText
     {
         [SerializeField] DamageText damageTextPrefab = null;
 
-        void Start()
-        {
-            Spawn(1);
-        }
-
         public void Spawn(float damageAmount)
         {
             print("Spawn execute");

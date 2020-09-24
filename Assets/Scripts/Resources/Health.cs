@@ -3,6 +3,7 @@ using RPG.Core;
 using RPG.Saving;
 using RPG.Stats;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RPG.Resources
 {
@@ -10,6 +11,7 @@ namespace RPG.Resources
     {
         // config params
         [SerializeField] float regenerationPercentage = 70;
+        [SerializeField] UnityEvent takeDamage;
 
         // cache
         Animator _animator;
@@ -61,6 +63,7 @@ namespace RPG.Resources
 
         public void TakeDamage(GameObject instigator, float damage)
         {
+            takeDamage.Invoke();
             healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
 
             DieHandler(instigator);
