@@ -10,6 +10,7 @@ namespace PRG.UI.DamageText
         {
             print($"Spawn execute {damageAmount}");
             DamageText instance = Instantiate<DamageText>(damageTextPrefab, transform);
+            instance.SetDamageText(damageAmount);
         }
     }
 }
