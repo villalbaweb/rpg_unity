@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 9007847240276677730}
   - component: {fileID: 200872782333676137}
   - component: {fileID: 6560787273913473476}
+  - component: {fileID: 7654508781386763969}
   m_Layer: 5
   m_Name: Foreground
   m_TagString: Untagged
@@ -170,7 +171,7 @@ RectTransform:
   m_GameObject: {fileID: 7007610385371415105}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 3.5527137e-13}
-  m_LocalScale: {x: 0.63, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7693598570199788392}
   m_RootOrder: 0
@@ -216,6 +217,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7654508781386763969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7007610385371415105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda4b189c84dae14fa73b9e52cdfb193, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 0}
 --- !u!1 &8653452484620192025
 GameObject:
   m_ObjectHideFlags: 0

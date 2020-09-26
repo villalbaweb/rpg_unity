@@ -1,3 +1,4 @@
+using System;
 using GameDevTV.Utils;
 using RPG.Core;
 using RPG.Saving;
@@ -16,6 +17,8 @@ namespace RPG.Attributes
         [System.Serializable]
         public class TakeDamageEvent: UnityEvent<float> { }
 
+        // events
+        public event Action OnTakeDamage;
 
         // cache
         Animator _animator;
@@ -67,8 +70,10 @@ namespace RPG.Attributes
 
         public void TakeDamage(GameObject instigator, float damage)
         {
-            takeDamage.Invoke(damage);
             healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
+            
+            takeDamage.Invoke(damage);
+            if(OnTakeDamage != null) OnTakeDamage();
 
             DieHandler(instigator);
         }
