@@ -4,9 +4,15 @@ namespace RPG.Attributes
 {
     public class HealthBar : MonoBehaviour
     {
-        // config
-        [SerializeField] Health healthComponent = null;
-        [SerializeField] Canvas rootCanvas = null;
+        // cache
+        Health _health;
+        Canvas _canvas;
+
+        void Awake() 
+        {
+            _health = GetComponentInParent<Health>();
+            _canvas = GetComponentInParent<Canvas>();
+        }
 
         void Start() 
         {
@@ -15,23 +21,23 @@ namespace RPG.Attributes
 
         void OnEnable() 
         {
-            if(!healthComponent) return;
+            if(!_health) return;
 
-            healthComponent.OnTakeDamage += OnHealthDamage;    
+            _health.OnTakeDamage += OnHealthDamage;    
         }
 
         void OnDisable() 
         {
-            if(!healthComponent) return;
+            if(!_health) return;
 
-            healthComponent.OnTakeDamage -= OnHealthDamage;    
+            _health.OnTakeDamage -= OnHealthDamage;    
         }
 
         void OnHealthDamage()
         {
-            if (!healthComponent) return;
+            if (!_health) return;
 
-            float lifePropertyLeft = healthComponent.HealthPoints / healthComponent.MaxHealthPoints;
+            float lifePropertyLeft = _health.HealthPoints / _health.MaxHealthPoints;
 
             transform.localScale = new Vector3(lifePropertyLeft, 1, 1);
 
@@ -40,9 +46,9 @@ namespace RPG.Attributes
 
         private void EnableCanvas(bool enableSignal)
         {
-            if(!rootCanvas) return;
+            if(!_canvas) return;
 
-            rootCanvas.enabled = enableSignal;
+            _canvas.enabled = enableSignal;
         }
     }
 }
