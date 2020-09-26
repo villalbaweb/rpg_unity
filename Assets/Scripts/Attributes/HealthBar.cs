@@ -6,6 +6,12 @@ namespace RPG.Attributes
     {
         // config
         [SerializeField] Health healthComponent = null;
+        [SerializeField] Canvas rootCanvas = null;
+
+        void Start() 
+        {
+            EnableCanvas(false);
+        }
 
         void OnEnable() 
         {
@@ -28,6 +34,15 @@ namespace RPG.Attributes
             float lifePropertyLeft = healthComponent.HealthPoints / healthComponent.MaxHealthPoints;
 
             transform.localScale = new Vector3(lifePropertyLeft, 1, 1);
+
+            EnableCanvas(lifePropertyLeft > Mathf.Epsilon);
+        }
+
+        private void EnableCanvas(bool enableSignal)
+        {
+            if(!rootCanvas) return;
+
+            rootCanvas.enabled = enableSignal;
         }
     }
 }
