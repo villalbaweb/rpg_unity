@@ -22,6 +22,9 @@ namespace RPG.SceneManagement
         [SerializeField] DestinationIdentifier destination;
         [SerializeField] float fadeOutTime = 0.5f;
         [SerializeField] float fadeInTime = 0.5f;
+
+        // cache
+        PlayerController _playerController;
         
         private void OnTriggerEnter(Collider other) 
         {
@@ -32,6 +35,10 @@ namespace RPG.SceneManagement
 
         private IEnumerator Transition()
         {
+            // dont move, remove player control
+            _playerController = FindObjectOfType<PlayerController>();
+            _playerController.enabled = false;
+
             DontDestroyOnLoad(gameObject);
 
             Fader _fader = FindObjectOfType<Fader>();
@@ -40,7 +47,9 @@ namespace RPG.SceneManagement
             SavingWrapper _savingWrapper = FindObjectOfType<SavingWrapper>();
             _savingWrapper.Save();
 
-            yield return SceneManager.LoadSceneAsync(sceneToLoad); 
+            yield return SceneManager.LoadSceneAsync(sceneToLoad);
+            _playerController = FindObjectOfType<PlayerController>();
+            _playerController.enabled = false;
 
             _savingWrapper.Load();
 
@@ -52,8 +61,9 @@ namespace RPG.SceneManagement
 
             _savingWrapper.Save();
 
-            yield return _fader.FadeIn(fadeInTime);
+            _fader.FadeIn(fadeInTime);
 
+            _playerController.enabled = true;
             Destroy(gameObject);
         }
 
