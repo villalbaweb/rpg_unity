@@ -21,12 +21,12 @@ namespace RPG.SceneManagement
 
         public IEnumerator FadeOut(float time)
         {
-            yield return Fade(1, time);
+            return Fade(1, time);
         }
 
         public IEnumerator FadeIn(float time)
         {
-            yield return Fade(0, time);
+            return Fade(0, time);
         }
 
         private IEnumerator Fade(float target, float time)
