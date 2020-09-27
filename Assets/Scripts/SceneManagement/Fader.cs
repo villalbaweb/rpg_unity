@@ -7,6 +7,7 @@ namespace RPG.SceneManagement
     {
         // cache
         CanvasGroup _canvasGroup;
+        Coroutine currentActiveFade = null;
 
         private void Awake() 
         {
@@ -20,18 +21,31 @@ namespace RPG.SceneManagement
 
         public IEnumerator FadeOut(float time)
         {
-            while (_canvasGroup.alpha < 1)
-            {
-                _canvasGroup.alpha += Time.deltaTime / time;
-                yield return null;
-            }
+            yield return Fade(1, time);
         }
 
         public IEnumerator FadeIn(float time)
         {
-            while (_canvasGroup.alpha > 0)
+            yield return Fade(0, time);
+        }
+
+        private IEnumerator Fade(float target, float time)
+        {
+            if (currentActiveFade != null)
             {
-                _canvasGroup.alpha -= Time.deltaTime / time;
+                StopCoroutine(currentActiveFade);
+            }
+
+            currentActiveFade = StartCoroutine(FadeRoutine(target, time));
+
+            yield return currentActiveFade;
+        }
+
+        private IEnumerator FadeRoutine(float target, float time)
+        {
+            while (!Mathf.Approximately(_canvasGroup.alpha, target))
+            {
+                _canvasGroup.alpha = Mathf.MoveTowards(_canvasGroup.alpha, target, Time.deltaTime / time);
                 yield return null;
             }
         }
