@@ -6,7 +6,7 @@ namespace RPG.Combat
 {
     public class WeaponPickup : MonoBehaviour, IRayCastable
     {
-        [SerializeField] Weapon weapon = null;
+        [SerializeField] WeaponConfig weapon = null;
         [SerializeField] float respawnTime = 5.0f;
 
         private void OnTriggerEnter(Collider other)

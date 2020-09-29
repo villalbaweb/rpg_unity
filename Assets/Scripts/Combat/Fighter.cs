@@ -17,7 +17,7 @@ namespace RPG.Combat
         [SerializeField] float timeBetweenAttacks = 1f;
         [SerializeField] Transform rightHandTransform = null;
         [SerializeField] Transform leftHandTransform = null;
-        [SerializeField] Weapon defaultWeapon = null;
+        [SerializeField] WeaponConfig defaultWeapon = null;
 
         // cache
         Mover _mover;
@@ -28,7 +28,7 @@ namespace RPG.Combat
         // state
         Health target;
         float timeSinceLastAttack = Mathf.Infinity;
-        LazyValue<Weapon> currentWeapon;
+        LazyValue<WeaponConfig> currentWeapon;
 
         private void Awake()
         {
@@ -37,7 +37,7 @@ namespace RPG.Combat
             _animator = GetComponent<Animator>();
             _baseStats = GetComponent<BaseStats>();
 
-            currentWeapon = new LazyValue<Weapon>(CurrentWeaponInitialize);
+            currentWeapon = new LazyValue<WeaponConfig>(CurrentWeaponInitialize);
         }
 
         private void Start()
@@ -45,7 +45,7 @@ namespace RPG.Combat
             currentWeapon.ForceInit();
         }
 
-        private Weapon CurrentWeaponInitialize()
+        private WeaponConfig CurrentWeaponInitialize()
         {
             AttachWeapon(defaultWeapon);
             return defaultWeapon;
@@ -79,7 +79,7 @@ namespace RPG.Combat
             TriggerStopAttack();
         }
 
-        public void EquipWeapon(Weapon weapon)
+        public void EquipWeapon(WeaponConfig weapon)
         {
             if(!weapon) return;
 
@@ -88,7 +88,7 @@ namespace RPG.Combat
             AttachWeapon(weapon);
         }
 
-        private void AttachWeapon(Weapon weapon)
+        private void AttachWeapon(WeaponConfig weapon)
         {
             Animator _animator = GetComponent<Animator>();
             weapon.Spawn(rightHandTransform, leftHandTransform, _animator);
@@ -189,7 +189,7 @@ namespace RPG.Combat
             string restoredWeaponName = state as string;
 
             // Resources is a special folder that will include all the assets and refs to the build
-            Weapon weapon = UnityEngine.Resources.Load<Weapon>(restoredWeaponName);
+            WeaponConfig weapon = UnityEngine.Resources.Load<WeaponConfig>(restoredWeaponName);
             EquipWeapon(weapon);
         }
     }
