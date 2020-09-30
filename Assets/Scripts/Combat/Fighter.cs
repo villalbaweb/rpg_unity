@@ -17,7 +17,7 @@ namespace RPG.Combat
         [SerializeField] float timeBetweenAttacks = 1f;
         [SerializeField] Transform rightHandTransform = null;
         [SerializeField] Transform leftHandTransform = null;
-        [SerializeField] WeaponConfig defaultWeapon = null;
+        [SerializeField] WeaponConfig defaultWeaponConfig = null;
 
         // cache
         Mover _mover;
@@ -28,7 +28,8 @@ namespace RPG.Combat
         // state
         Health target;
         float timeSinceLastAttack = Mathf.Infinity;
-        LazyValue<WeaponConfig> currentWeapon;
+        WeaponConfig currentWeaponConfig;
+        LazyValue<Weapon> currentWeapon;
 
         private void Awake()
         {
@@ -37,7 +38,8 @@ namespace RPG.Combat
             _animator = GetComponent<Animator>();
             _baseStats = GetComponent<BaseStats>();
 
-            currentWeapon = new LazyValue<WeaponConfig>(CurrentWeaponInitialize);
+            currentWeaponConfig = defaultWeaponConfig;
+            currentWeapon = new LazyValue<Weapon>(CurrentWeaponInitialize);
         }
 
         private void Start()
@@ -45,10 +47,9 @@ namespace RPG.Combat
             currentWeapon.ForceInit();
         }
 
-        private WeaponConfig CurrentWeaponInitialize()
+        private Weapon CurrentWeaponInitialize()
         {
-            AttachWeapon(defaultWeapon);
-            return defaultWeapon;
+            return AttachWeapon(defaultWeaponConfig);
         }
 
         private void Update() 
@@ -83,15 +84,15 @@ namespace RPG.Combat
         {
             if(!weapon) return;
 
-            currentWeapon.value = weapon;
+            currentWeaponConfig = weapon;
 
-            AttachWeapon(weapon);
+            currentWeapon.value = AttachWeapon(weapon);
         }
 
-        private void AttachWeapon(WeaponConfig weapon)
+        private Weapon AttachWeapon(WeaponConfig weapon)
         {
             Animator _animator = GetComponent<Animator>();
-            weapon.Spawn(rightHandTransform, leftHandTransform, _animator);
+            return weapon.Spawn(rightHandTransform, leftHandTransform, _animator);
         }
 
         public Health GetTarget()
@@ -103,7 +104,7 @@ namespace RPG.Combat
         {
             if (target == null) return;
 
-            bool isInRange = Vector3.Distance(target.transform.position, transform.position) <= currentWeapon.value.WeaponRange;
+            bool isInRange = Vector3.Distance(target.transform.position, transform.position) <= currentWeaponConfig.WeaponRange;
             if (!isInRange)
             {
                 _mover.MoveTo(target.transform.position);
@@ -144,7 +145,7 @@ namespace RPG.Combat
         {
             if(stat == Stat.Damage)
             {
-                yield return currentWeapon.value.WeaponDamage;
+                yield return currentWeaponConfig.WeaponDamage;
             }
         }
 
@@ -152,7 +153,7 @@ namespace RPG.Combat
         {
             if(stat == Stat.Damage)
             {
-                yield return currentWeapon.value.PercentageBonus;
+                yield return currentWeaponConfig.PercentageBonus;
             }
         }
 
@@ -163,9 +164,14 @@ namespace RPG.Combat
 
             float damage = _baseStats.GetStat(Stat.Damage);
 
-            if (currentWeapon.value.HasProjectile)
+            if(currentWeapon.value != null)
             {
-                currentWeapon.value.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject, damage);
+                currentWeapon.value.OnHit();
+            }
+
+            if (currentWeaponConfig.HasProjectile)
+            {
+                currentWeaponConfig.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject, damage);
             }
             else
             {
@@ -181,7 +187,7 @@ namespace RPG.Combat
 
         public object CaptureState()
         {
-            return currentWeapon.value.name;
+            return currentWeaponConfig.name;
         }
 
         public void RestoreState(object state)
