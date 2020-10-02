@@ -79,6 +79,11 @@ namespace RPG.Attributes
             DieHandler(instigator);
         }
 
+        public void Heal(float healthToHeal)
+        {
+            healthPoints.value += healthToHeal;
+        }
+
         private void DieHandler(GameObject instigator)
         {
             if (!isDead && healthPoints.value == 0)
