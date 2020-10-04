@@ -18,6 +18,7 @@ namespace RPG.Control
         [Range(0,1)]
         [SerializeField] float patrolSpeedFraction = 0.5f;
         [SerializeField] float maxSpeed = 5f;
+        [SerializeField] float aggervateTime = 5f;
 
         // cache
         Fighter _fighter;
@@ -31,6 +32,7 @@ namespace RPG.Control
         LazyValue<Vector3> guardLocation;
         float timeSinceLastSawPLayer = Mathf.Infinity;
         float timeSinceReachWaypoint = Mathf.Infinity;
+        float timeSinceAggrevation = Mathf.Infinity;
         int patrolPathWaypointIndex = 0;
 
         private void Awake()
@@ -52,21 +54,32 @@ namespace RPG.Control
 
         private void Update()
         {
-            if (_health.IsDead()) 
+            if (_health.IsDead())
             {
                 Destroy(_rigidBody); //destroy this component in order to avoid strange interactions
                 return;
             }
 
+            Chase();
+
+            UpdateTimers();
+        }
+
+        public void Aggrevate()
+        {
+            timeSinceAggrevation = 0;
+        }
+
+        private void UpdateTimers()
+        {
             timeSinceLastSawPLayer += Time.deltaTime;
             timeSinceReachWaypoint += Time.deltaTime;
-            
-            Chase();
+            timeSinceAggrevation += Time.deltaTime;
         }
 
         private void Chase()
         {
-            if (IsInAttackRange() && _fighter.CanAttack(_player))
+            if ((IsAggreviated() && _fighter.CanAttack(_player)))
             {
                 AttackBehavior();
             }
@@ -126,8 +139,11 @@ namespace RPG.Control
             _fighter.Attack(_player);
         }
 
-        private bool IsInAttackRange() {
-            return Vector3.Distance(_player.transform.position, transform.position) <= chaseDistance;
+        private bool IsAggreviated() {
+
+            bool isInAttackRange = Vector3.Distance(_player.transform.position, transform.position) <= chaseDistance;
+            bool isAggreviated = timeSinceAggrevation < aggervateTime;
+            return isInAttackRange || isAggreviated;
         }
 
         // called by Unity
