@@ -10,6 +10,8 @@ namespace RPG.Movement
 
     public class Mover : MonoBehaviour, IAction, ISaveable
     {
+        [SerializeField] float maxPathLenght = 10;
+
         // cache
         NavMeshAgent _agent;
         Animator _animator;
@@ -52,6 +54,37 @@ namespace RPG.Movement
         public void SetMovementSpeed(float speed)
         {
             _agent.speed = speed;
+        }
+
+        public bool CanMoveTo(Vector3 targetPos)
+        {
+            NavMeshPath path = new NavMeshPath();
+            bool hasPath = NavMesh.CalculatePath(transform.position, targetPos, NavMesh.AllAreas, path);
+
+            if (IsBadPath(path, hasPath)) return false;
+
+            return true;
+        }
+
+        private bool IsBadPath(NavMeshPath path, bool hasPath)
+        {
+            return !hasPath ||
+                    path.status != NavMeshPathStatus.PathComplete ||
+                    GetPathLength(path) > maxPathLenght;
+        }
+
+        private float GetPathLength(NavMeshPath path)
+        {
+            float result = 0;
+
+            if (path.corners.Length < 2) return result;
+
+            for (int i = 0; i < path.corners.Length - 1; i++)
+            {
+                result += Vector3.Distance(path.corners[i], path.corners[i + 1]);
+            }
+
+            return result;
         }
 
         private void UpdateAnimator() 
