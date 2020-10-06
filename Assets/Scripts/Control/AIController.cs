@@ -28,6 +28,7 @@ namespace RPG.Control
         Mover _mover;
         ActionScheduler _actionScheduler;
         Rigidbody _rigidBody;
+        CapsuleCollider _capsuleCollider;
 
         // state
         LazyValue<Vector3> guardLocation;
@@ -44,6 +45,7 @@ namespace RPG.Control
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _rigidBody = GetComponent<Rigidbody>();
+            _capsuleCollider = GetComponent<CapsuleCollider>();
 
             guardLocation = new LazyValue<Vector3>(GuardLocationInitializer);
         }
@@ -58,6 +60,7 @@ namespace RPG.Control
             if (_health.IsDead())
             {
                 Destroy(_rigidBody); //destroy this component in order to avoid strange interactions
+                Destroy(_capsuleCollider);
                 return;
             }
 

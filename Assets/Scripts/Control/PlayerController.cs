@@ -13,6 +13,7 @@ namespace RPG.Control
         // configs
         [SerializeField] CursorMapping[] cursorMappings = null;
         [SerializeField] float maxNavMeshProjectionDistance = 1f;
+        [SerializeField] float interactWithObjectsRadio = 1f;
         
 
         // cache
@@ -81,7 +82,8 @@ namespace RPG.Control
 
         RaycastHit[] RaycastAllSorted()
         {
-            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
+            //RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
+            RaycastHit[] hits = Physics.SphereCastAll(GetMouseRay(), interactWithObjectsRadio); // this casts a sphere like ray with the same effect as RaycastAll
 
             float[] distances = new float[hits.Length];
 
