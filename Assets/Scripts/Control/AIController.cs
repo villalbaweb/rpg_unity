@@ -19,6 +19,7 @@ namespace RPG.Control
         [SerializeField] float patrolSpeedFraction = 0.5f;
         [SerializeField] float maxSpeed = 5f;
         [SerializeField] float aggervateTime = 5f;
+        [SerializeField] float shoutDistance = 5f;
 
         // cache
         Fighter _fighter;
@@ -137,6 +138,22 @@ namespace RPG.Control
             timeSinceLastSawPLayer = 0;
             _mover.SetMovementSpeed(maxSpeed);
             _fighter.Attack(_player);
+
+            AggrevateNearbyEnemies();
+        }
+
+        private void AggrevateNearbyEnemies()
+        {
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position, shoutDistance, Vector3.up, 0);
+
+            foreach(RaycastHit hit in hits)
+            {
+                AIController _aiController = hit.transform.gameObject.GetComponent<AIController>();
+                if(_aiController)
+                {
+                    _aiController.Aggrevate();
+                }
+            }
         }
 
         private bool IsAggreviated() {
